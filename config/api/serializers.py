@@ -1,14 +1,14 @@
-# ==========================================
-# AI LearnMate - API Serializers
-# Converts Django Models to JSON and
-# JSON data to Django Models
-# ==========================================
-
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
 from courses.models import Category, Course, StudyMaterial
 from quizzes.models import Quiz,Question,StudentResult
+from progress_tracker.models import ProgressTracker
+# ==========================================
+# AI LearnMate - API Serializers
+# Converts Django Models to JSON and
+# JSON data to Django Models
+# ==========================================
 
 # ==========================================
 # AUTHENTICATION SERIALIZERS
@@ -65,10 +65,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
 
-    category_name = serializers.CharField(
-        source='category.name',
-        read_only=True
-    )
+    category_name = serializers.CharField(source='category.name',read_only=True)
 
     class Meta:
 
@@ -86,10 +83,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class StudyMaterialSerializer(serializers.ModelSerializer):
 
-    course_name = serializers.CharField(
-        source='course.title',
-        read_only=True
-    )
+    course_name = serializers.CharField(source='course.title',read_only=True)
 
     class Meta:
 
@@ -123,3 +117,19 @@ class StudentResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentResult
         fields = '__all__'
+
+
+
+# ==========================================
+# PROGRESS TRACKER  SERIALIZERS
+
+# ==========================================
+
+class ProgressTrackerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = ProgressTracker
+
+        fields = '__all__'
+

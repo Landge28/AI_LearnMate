@@ -13,18 +13,21 @@ from rest_framework.authtoken.models import Token
 
 from .serializers import (CategorySerializer,CourseSerializer,StudyMaterialSerializer)
 from rest_framework.permissions import AllowAny
-
 from courses.models import Category,Course,StudyMaterial
 
 from quizzes.models import Quiz,Question,StudentResult
-
 from .serializers import QuizSerializer,QuestionSerializer,StudentResultSerializer
 
+from progress_tracker.models import ProgressTracker
+from .serializers import ProgressTrackerSerializer
+from rest_framework.permissions import AllowAny
 
+# ==========================================
+# USER AUTHENTICATION APIs
+# Handles User Registration
+# ==========================================
 class RegisterAPIView(APIView):
-
-    permission_classes = []
-
+    permission_classes = [AllowAny]
     def post(self, request):
 
         serializer = UserRegisterSerializer(data=request.data)
@@ -42,7 +45,10 @@ class RegisterAPIView(APIView):
 
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-
+# ==========================================
+# USER LOGIN API
+# Authenticates User and Generates Token
+# ==========================================
 class LoginAPIView(APIView):
 
     permission_classes = []
@@ -52,16 +58,11 @@ class LoginAPIView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        user = authenticate(
-            username=username,
-            password=password
-        )
+        user = authenticate( username=username,password=password)
 
         if user:
 
-            token, created = Token.objects.get_or_create(
-                user=user
-            )
+            token, created = Token.objects.get_or_create(user=user)
 
             return Response({
 
@@ -80,6 +81,11 @@ class LoginAPIView(APIView):
             status=401
         )
 
+
+# ==========================================
+# USER PROFILE API
+# Returns Logged-in User Details
+# ==========================================
 class ProfileAPIView(APIView):
 
     def get(self, request):
@@ -99,6 +105,10 @@ class ProfileAPIView(APIView):
         })
 
 
+# ==========================================
+# USER LOGOUT API
+# Handles User Logout
+# ==========================================
 class LogoutAPIView(APIView):
 
     def post(self, request):
@@ -109,35 +119,44 @@ class LogoutAPIView(APIView):
 
 
 
-
+# ==========================================
+# CATEGORY MANAGEMENT API
+# Returns All Course Categories
+# ==========================================
 class CategoryListAPIView(APIView):
 
     permission_classes = [AllowAny]
     def get(self, request):
         categories = Category.objects.all()
 
-        serializer = CategorySerializer(
-            categories,
-            many=True
-        )
+        serializer = CategorySerializer(categories,many=True)
 
         return Response(serializer.data)
 
 
+
+
+# ==========================================
+# COURSE MANAGEMENT API
+# Returns All Available Courses
+# ==========================================
 class CourseListAPIView(APIView):
 
     permission_classes = [AllowAny]
     def get(self, request):
         courses = Course.objects.all()
 
-        serializer = CourseSerializer(
-            courses,
-            many=True
-        )
+        serializer = CourseSerializer(courses,many=True)
 
         return Response(serializer.data)
 
 
+
+
+# ==========================================
+# COURSE DETAILS API
+# Returns Details of a Selected Course
+# ==========================================
 class CourseDetailAPIView(APIView):
     permission_classes = [AllowAny]
     def get(self, request, pk):
@@ -159,22 +178,31 @@ class CourseDetailAPIView(APIView):
                 status=404
             )
 
+
+
+
+# ==========================================
+# STUDY MATERIAL API
+# Returns Study Materials for Courses
+# ==========================================
 class StudyMaterialAPIView(APIView):
     permission_classes = [AllowAny]
     def get(self, request):
 
         materials = StudyMaterial.objects.all()
 
-        serializer = StudyMaterialSerializer(
-            materials,
-            many=True
-        )
+        serializer = StudyMaterialSerializer(materials,many=True)
 
         return Response(serializer.data)
 
 
-from rest_framework.permissions import AllowAny
 
+
+
+# ==========================================
+# QUIZ MANAGEMENT API
+# Returns All Available Quizzes
+# ==========================================
 class QuizListAPIView(APIView):
 
     permission_classes = [AllowAny]
@@ -183,32 +211,40 @@ class QuizListAPIView(APIView):
 
         quizzes = Quiz.objects.all()
 
-        serializer = QuizSerializer(
-            quizzes,
-            many=True
-        )
+        serializer = QuizSerializer(quizzes,many=True)
 
         return Response(serializer.data)
 
 
+
+
+
+
+# ==========================================
+# QUIZ QUESTION API
+# Returns Questions for a Selected Quiz
+# ==========================================
 class QuizQuestionAPIView(APIView):
 
     permission_classes = [AllowAny]
 
     def get(self, request, quiz_id):
 
-        questions = Question.objects.filter(
-            quiz_id=quiz_id
-        )
+        questions = Question.objects.filter(quiz_id=quiz_id)
 
-        serializer = QuestionSerializer(
-            questions,
-            many=True
-        )
+        serializer = QuestionSerializer(questions,many=True)
 
         return Response(serializer.data)
 
 
+
+
+
+
+# ==========================================
+# QUIZ SUBMISSION API
+# Evaluates Quiz and Updates Student Progress
+# ==========================================
 class SubmitQuizAPIView(APIView):
 
     def post(self, request):
@@ -217,38 +253,77 @@ class SubmitQuizAPIView(APIView):
 
         answers = request.data.get('answers')
 
-        questions = Question.objects.filter(
-            quiz_id=quiz_id
-        )
+        questions = Question.objects.filter(quiz_id=quiz_id)
 
         score = 0
 
         for question in questions:
 
-            submitted_answer = answers.get(
-                str(question.id)
-            )
+            submitted_answer = answers.get(str(question.id))
 
             if submitted_answer == question.correct_answer:
 
                 score += 1
 
-        StudentResult.objects.create(
+        result = StudentResult.objects.create(student=request.user,quiz_id=quiz_id,score=score)
 
-            student=request.user,
+        all_results = StudentResult.objects.filter(student=request.user)
 
-            quiz_id=quiz_id,
+        total_attempts = all_results.count()
 
-            score=score
+        average_score = sum(r.score for r in all_results) / total_attempts
 
+        highest_score = max(r.score for r in all_results)
+
+        progress_percentage = (average_score / questions.count()) * 100
+
+        progress, created = (ProgressTracker.objects.get_or_create(student=request.user))
+
+        progress.quizzes_attempted = total_attempts
+
+        progress.average_score = average_score
+
+        progress.highest_score = highest_score
+
+        progress.progress_percentage = (progress_percentage)
+
+        progress.save()
+
+        return Response(
+            {
+                "message": "Quiz Submitted Successfully",
+                "score": score,
+                "progress": progress.progress_percentage
+            },
+            status=status.HTTP_200_OK
         )
 
-        return Response({
 
-            "message": "Quiz Submitted",
 
-            "score": score,
 
-            "total_questions": questions.count()
 
-        })
+# ==========================================
+# PROGRESS TRACKER API
+# Returns Student Learning Progress
+# ==========================================
+class ProgressAPIView(APIView):
+
+    def get(self, request):
+
+        try:
+
+            progress = ProgressTracker.objects.get(student=request.user)
+
+            serializer = ProgressTrackerSerializer(progress)
+
+            return Response(serializer.data)
+
+        except ProgressTracker.DoesNotExist:
+
+            return Response(
+                {
+                    "message":
+                    "No Progress Data Found"
+                },
+                status=404
+            )

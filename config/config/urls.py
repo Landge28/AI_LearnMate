@@ -22,13 +22,36 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+
+    # ==========================================
+    # DJANGO ADMIN PANEL
+    # ==========================================
     path('admin/', admin.site.urls),
+
+    # ==========================================
+    # ACCOUNTS APP URLS
+    # ==========================================
+
+    # Handles:
+    # Home Page
+    # Register
+    # Login
+    # Logout
+    # Dashboard
 
     path('', include('accounts.urls')),
 
+    # ==========================================
+    # REST API URLS
+    # ==========================================
     path('api/', include('api.urls')),
 
 ]
 
+
+    # ==========================================
+    # MEDIA FILE CONFIGURATION
+    # ==========================================
+    # Serves uploaded media files during development
 urlpatterns += static(
     settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

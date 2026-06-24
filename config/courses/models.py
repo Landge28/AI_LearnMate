@@ -3,7 +3,12 @@ from django.db import models
 # Create your models here.
 from django.db import models
 
-
+# ==========================================
+# CATEGORY MODEL
+# Stores course categories
+# Example:
+# Python, Java, Cyber Security, AI
+# ==========================================
 class Category(models.Model):
 
     name = models.CharField(max_length=100,unique=True)
@@ -14,6 +19,10 @@ class Category(models.Model):
         return self.name
 
 
+# ==========================================
+# COURSE MODEL
+# Stores course information
+# ==========================================
 class Course(models.Model):
 
     category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name='courses')
@@ -29,6 +38,12 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+
+# ==========================================
+# STUDY MATERIAL MODEL
+# Stores PDFs and Video Resources
+# related to a course
+# ==========================================
 class StudyMaterial(models.Model):
 
     course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name='materials')

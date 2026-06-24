@@ -1,10 +1,3 @@
-# ==========================================
-# ACCOUNTS APP - USER AUTHENTICATION VIEWS
-# Handles user registration, login, logout
-# and profile-related operations
-# ==========================================
-
-
 from django.shortcuts import render
 
 # Create your views here.
@@ -15,6 +8,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
 from .forms import UserRegisterForm
+
+# ==========================================
+# ACCOUNTS APP - USER AUTHENTICATION VIEWS
+# Handles user registration, login, logout
+# and profile-related operations
+# ==========================================
+
 
 # ==========================================
 # HOME PAGE VIEW

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from courses.models import Category, Course, StudyMaterial
 from quizzes.models import Quiz,Question,StudentResult
 from progress_tracker.models import ProgressTracker
+from recommendations.models import Recommendation
 # ==========================================
 # AI LearnMate - API Serializers
 # Converts Django Models to JSON and
@@ -132,4 +133,19 @@ class ProgressTrackerSerializer(serializers.ModelSerializer):
         model = ProgressTracker
 
         fields = '__all__'
+
+
+
+# ==========================================
+# RECOMMENDATION SERIALIZERS
+# Converts recommendation data into JSON format
+# ==========================================
+
+class RecommendationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Recommendation
+        fields = '__all__'
+
+
 

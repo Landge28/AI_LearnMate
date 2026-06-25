@@ -41,9 +41,15 @@ urlpatterns = [
 
     path('submit-quiz/',views.SubmitQuizAPIView.as_view()),
 
-# ==========================================
+    # ==========================================
     # PROGRESS TRACKER APIs
     # ==========================================
     path('progress/',views.ProgressAPIView.as_view()),
+
+    # ==========================================
+    # AI RECOMMENDATION  APIs
+    # ==========================================
+
+    path('recommendations/',views.RecommendationAPIView.as_view()),
 
 ]

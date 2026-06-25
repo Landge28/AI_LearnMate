@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -12,7 +13,6 @@ from rest_framework.authtoken.models import Token
 
 
 from .serializers import (CategorySerializer,CourseSerializer,StudyMaterialSerializer)
-from rest_framework.permissions import AllowAny
 from courses.models import Category,Course,StudyMaterial
 
 from quizzes.models import Quiz,Question,StudentResult
@@ -20,7 +20,9 @@ from .serializers import QuizSerializer,QuestionSerializer,StudentResultSerializ
 
 from progress_tracker.models import ProgressTracker
 from .serializers import ProgressTrackerSerializer
-from rest_framework.permissions import AllowAny
+
+
+from recommendations.models import Recommendation
 
 # ==========================================
 # USER AUTHENTICATION APIs
@@ -327,3 +329,58 @@ class ProgressAPIView(APIView):
                 },
                 status=404
             )
+
+
+# ==========================================
+# RECOMMENDATION API
+# Fetches AI-based personalized course
+# recommendations for the logged-in student
+# ==========================================
+
+class RecommendationAPIView(APIView):
+    def get(self, request):
+
+        try:
+
+            progress = ProgressTracker.objects.get(student=request.user)
+
+            if progress.progress_percentage < 50:
+
+                courses = Course.objects.all()[:3]
+
+                reason = "Beginner Level Recommended"
+
+            elif progress.progress_percentage < 75:
+
+                courses = Course.objects.all()[:3]
+
+                reason = "Intermediate Level Recommended"
+
+            else:
+
+                courses = Course.objects.all()[:3]
+
+                reason = "Advanced Level Recommended"
+
+            recommendations = []
+
+            for course in courses:
+
+                recommendations.append({
+
+                    "course": course.title,
+
+                    "reason": reason
+
+                })
+
+            return Response(recommendations)
+
+        except ProgressTracker.DoesNotExist:
+
+            return Response({
+
+                "message":
+                "No Progress Found"
+
+            })

@@ -148,4 +148,11 @@ class RecommendationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# ============================================
+# AI Tutor Serializers
+# Validates student questions and
+# formats AI responses
+# ============================================
+class AIChatSerializer(serializers.Serializer):
 
+    question = serializers.CharField()

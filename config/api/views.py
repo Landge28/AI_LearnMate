@@ -21,8 +21,10 @@ from .serializers import QuizSerializer,QuestionSerializer,StudentResultSerializ
 from progress_tracker.models import ProgressTracker
 from .serializers import ProgressTrackerSerializer
 
-
 from recommendations.models import Recommendation
+
+from ai_tutor.services import AIService
+from .serializers import AIChatSerializer
 
 # ==========================================
 # USER AUTHENTICATION APIs
@@ -384,3 +386,33 @@ class RecommendationAPIView(APIView):
                 "No Progress Found"
 
             })
+
+
+# ============================================
+# AI Tutor API
+# Receives student questions and returns
+# AI-generated learning assistance
+# ============================================
+class AIChatAPIView(APIView):
+
+    def post(self, request):
+
+        serializer = AIChatSerializer(data=request.data)
+
+        if serializer.is_valid():
+
+            question = serializer.validated_data["question"]
+
+            ai = AIService()
+
+            answer = ai.ask_ai(question)
+
+            return Response({
+
+                "question": question,
+
+                "answer": answer
+
+            })
+
+        return Response(serializer.errors,status=400)

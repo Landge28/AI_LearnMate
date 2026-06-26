@@ -52,4 +52,12 @@ urlpatterns = [
 
     path('recommendations/',views.RecommendationAPIView.as_view()),
 
+
+# ============================================
+# AI Tutor URL Configuration
+# Defines API endpoints for AI Tutor module
+# ============================================
+
+    path("ai-chat/",views.AIChatAPIView.as_view(),),
+
 ]

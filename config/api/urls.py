@@ -59,5 +59,8 @@ urlpatterns = [
 # ============================================
 
     path("ai-chat/",views.AIChatAPIView.as_view(),),
+    path("chat-history/",views.ChatHistoryAPIView.as_view(),),
 
+
+    path("study-plan/",views.StudyPlanAPIView.as_view()),
 ]

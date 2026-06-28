@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'recommendations',
     'progress_tracker',
     'api',
+    'study_planner',
+    'dashboard',
 ]
 
 

@@ -46,6 +46,9 @@ urlpatterns = [
     # ==========================================
     path('api/', include('api.urls')),
 
+
+    path("dashboard/",include("dashboard.urls")),
+
 ]
 
 

@@ -26,6 +26,12 @@ from recommendations.models import Recommendation
 from ai_tutor.services import AIService
 from .serializers import AIChatSerializer
 
+from ai_tutor.models import ChatSession, ChatMessage
+from .serializers import ChatSessionSerializer,ChatMessageSerializer
+
+
+from study_planner.services import StudyPlannerService
+from .serializers import StudyPlanSerializer
 # ==========================================
 # USER AUTHENTICATION APIs
 # Handles User Registration
@@ -393,6 +399,7 @@ class RecommendationAPIView(APIView):
 # Receives student questions and returns
 # AI-generated learning assistance
 # ============================================
+
 class AIChatAPIView(APIView):
 
     def post(self, request):
@@ -403,9 +410,15 @@ class AIChatAPIView(APIView):
 
             question = serializer.validated_data["question"]
 
+            session, created = ChatSession.objects.get_or_create(student=request.user,title="AI Tutor Chat")
+
+            ChatMessage.objects.create(session=session,role="user",message=question)
+
             ai = AIService()
 
             answer = ai.ask_ai(question)
+
+            ChatMessage.objects.create(session=session,role="assistant",message=answer)
 
             return Response({
 
@@ -415,4 +428,38 @@ class AIChatAPIView(APIView):
 
             })
 
-        return Response(serializer.errors,status=400)
+        return Response(serializer.errors, status=400)
+
+class ChatHistoryAPIView(APIView):
+
+    def get(self, request):
+
+        try:
+
+            session = ChatSession.objects.get(student=request.user,title="AI Tutor Chat")
+
+            messages = ChatMessage.objects.filter(session=session).order_by("created_at")
+
+            serializer = ChatMessageSerializer(messages,many=True)
+
+            return Response(serializer.data)
+
+        except ChatSession.DoesNotExist:
+
+            return Response({
+
+                "message": "No Chat History Found"
+
+            }, status=404)
+
+class StudyPlanAPIView(APIView):
+
+    def get(self, request):
+
+        planner = StudyPlannerService()
+
+        plans = planner.generate_plan(request.user)
+
+        serializer = StudyPlanSerializer(plans,many=True)
+
+        return Response(serializer.data)

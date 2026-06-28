@@ -1,26 +1,1104 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
-<div class="text-center">
 
-    <h1 class="display-4">
-        AI LearnMate
-    </h1>
 
-    <p class="lead">
-        Personalized Learning with AI Tutors
-    </p>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
 
-    <hr>
+    <div class="container">
 
-    <a href="#"
-       class="btn btn-primary btn-lg">
+        <!-- Logo -->
 
-        Start Learning
+        <a class="navbar-brand fw-bold logo" href="/">
 
-    </a>
+            AI LearnMate
 
-</div>
+        </a>
 
+        <!-- Mobile Toggle -->
+
+        <button class="navbar-toggler"
+
+            type="button"
+
+            data-bs-toggle="collapse"
+
+            data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse"
+
+            id="navbarNav">
+
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+
+                        href="#hero">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+
+                        href="#features">
+
+                        Courses
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+
+                        href="#about">
+
+                        About
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+
+                        href="#contact">
+
+                        Contact
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item ms-lg-3">
+
+                    <a href="{% url 'login' %}"
+
+                        class="btn btn-outline-primary login-btn">
+
+                        Login
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item ms-2">
+
+                    <a href="{% url 'register' %}"
+
+                        class="btn register-btn">
+
+                        Register
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">-->
+
+<!--<div class="container">-->
+
+<!--<a class="navbar-brand fw-bold" href="#">-->
+<!--AI LearnMate-->
+<!--</a>-->
+
+<!--<button class="navbar-toggler"-->
+<!--type="button"-->
+<!--data-bs-toggle="collapse"-->
+<!--data-bs-target="#navbarNav">-->
+
+<!--<span class="navbar-toggler-icon"></span>-->
+
+<!--</button>-->
+
+<!--<div class="collapse navbar-collapse" id="navbarNav">-->
+
+<!--<ul class="navbar-nav ms-auto">-->
+
+<!--<li class="nav-item">-->
+<!--<a class="nav-link" href="#">Home</a>-->
+<!--</li>-->
+
+<!--<li class="nav-item">-->
+<!--<a class="nav-link" href="#">Courses</a>-->
+<!--</li>-->
+
+<!--<li class="nav-item">-->
+<!--<a class="nav-link" href="#">Study Materials</a>-->
+<!--</li>-->
+
+<!--<li class="nav-item">-->
+<!--<a class="nav-link" href="#">Quiz</a>-->
+<!--</li>-->
+
+<!--<li class="nav-item">-->
+<!--<a class="nav-link" href="#">Progress</a>-->
+<!--</li>-->
+
+<!--<li class="nav-item">-->
+<!--<a class="nav-link" href="#">AI Tutor</a>-->
+<!--</li>-->
+
+<!--<li class="nav-item ms-3">-->
+<!--<a href="{% url 'login' %}" class="btn btn-outline-light">-->
+<!--Login-->
+<!--</a>-->
+<!--</li>-->
+
+<!--<li class="nav-item ms-2">-->
+<!--<a href="{% url 'register' %}" class="btn btn-primary">-->
+<!--Register-->
+<!--</a>-->
+<!--</li>-->
+
+<!--</ul>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</nav>-->
+
+
+<!--Hero-->
+<section id="hero" class="hero-section">
+
+    <div class="container">
+
+        <div class="row align-items-center min-vh-100">
+
+            <!-- Left Content -->
+
+            <div class="col-lg-6 hero-content">
+
+                <span class="hero-badge">
+
+                    🚀 AI Powered Learning Platform
+
+                </span>
+
+                <h1 class="hero-title mt-4">
+
+                    Personalized Learning
+
+                    <br>
+
+                    <span>with AI Tutors</span>
+
+                </h1>
+
+                <p class="hero-description mt-4">
+
+                    Learn smarter with AI-powered recommendations,
+                    interactive quizzes, study materials,
+                    real-time progress tracking,
+                    and your personal AI Tutor.
+
+                </p>
+
+                <div class="hero-buttons mt-5">
+
+                    <a href="{% url 'register' %}"
+                       class="btn btn-primary btn-lg">
+
+                        Get Started
+
+                    </a>
+
+                    <a href="#features"
+                       class="btn btn-outline-primary btn-lg">
+
+                        Explore Courses
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Right Image -->
+
+            <div class="col-lg-6 text-center">
+
+                <img src="{% static 'images/hero.png' %}"
+                     class="img-fluid hero-image"
+                     alt="AI LearnMate">
+
+            </div>
+
+        </div>
+
+    </div>
+<div class="circle one"></div>
+<div class="circle two"></div>
+
+</section>
+
+
+
+<!--&lt;!&ndash; Hero &ndash;&gt;-->
+
+<!--<section class="bg-primary text-white">-->
+
+<!--<div class="container">-->
+
+<!--<div class="row align-items-center">-->
+
+<!--<div class="col-lg-6" data-aos="fade-right">-->
+
+<!--<h1 class="display-4 fw-bold">-->
+<!--Personalized Learning with AI Tutors-->
+<!--</h1>-->
+
+<!--<p class="lead mt-4">-->
+
+<!--Learn smarter using AI-powered recommendations,-->
+<!--interactive quizzes,-->
+<!--study materials,-->
+<!--and progress tracking.-->
+
+<!--</p>-->
+
+<!--<div class="mt-4">-->
+
+<!--<a href="{% url 'register' %}" class="btn btn-light btn-lg">-->
+
+<!--Get Started-->
+
+<!--</a>-->
+
+<!--<a href="#" class="btn btn-outline-light btn-lg ms-2">-->
+
+<!--Explore Courses-->
+
+<!--</a>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--<div class="col-lg-6 text-center" data-aos="fade-left">-->
+
+<!--<img-->
+<!--src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"-->
+<!--class="img-fluid"-->
+<!--width="420">-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</section>-->
+
+
+<!-- Features -->
+
+<section id="features" class="features-section py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="section-badge">
+                Features
+            </span>
+
+            <h2 class="section-title mt-3">
+                Everything You Need to Learn Smarter
+            </h2>
+
+            <p class="section-subtitle">
+                AI LearnMate combines modern learning tools into one intelligent platform.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Card 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-lock"></i>
+                    </div>
+                    <h4>Authentication</h4>
+                    <p>Secure registration, login and user management.</p>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>REST APIs</h4>
+                    <p>Powerful Django REST Framework backend APIs.</p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h4>Courses</h4>
+                    <p>Browse well-structured learning content.</p>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h4>Study Material</h4>
+                    <p>Notes, PDFs and additional learning resources.</p>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h4>Quiz Module</h4>
+                    <p>Interactive quizzes to improve your knowledge.</p>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Progress Tracker</h4>
+                    <p>Monitor learning performance with analytics.</p>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>Recommendations</h4>
+                    <p>AI-powered personalized course suggestions.</p>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI Tutor</h4>
+                    <p>Ask questions and receive intelligent explanations.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- Statistics Section -->
+
+<!--<section class="bg-light">-->
+
+<!--<div class="container">-->
+
+<!--<div class="text-center mb-5">-->
+
+<!--<h2 class="fw-bold">-->
+<!--Our Platform in Numbers-->
+<!--</h2>-->
+
+<!--<p class="text-muted">-->
+<!--Helping students learn smarter with AI.-->
+<!--</p>-->
+
+<!--</div>-->
+
+<!--<div class="row g-4">-->
+
+<!--<div class="col-md-6 col-lg-3" data-aos="flip-up">-->
+
+<!--<div class="stat-card">-->
+
+<!--<i class="fas fa-user-graduate stat-icon"></i>-->
+
+<!--<h2>500+</h2>-->
+
+<!--<p>Students</p>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--<div class="col-md-6 col-lg-3" data-aos="flip-up">-->
+
+<!--<div class="stat-card">-->
+
+<!--<i class="fas fa-book-open stat-icon"></i>-->
+
+<!--<h2>100+</h2>-->
+
+<!--<p>Courses</p>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--<div class="col-md-6 col-lg-3" data-aos="flip-up">-->
+
+<!--<div class="stat-card">-->
+
+<!--<i class="fas fa-list-check stat-icon"></i>-->
+
+<!--<h2>250+</h2>-->
+
+<!--<p>Quizzes</p>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--<div class="col-md-6 col-lg-3" data-aos="flip-up">-->
+
+<!--<div class="stat-card">-->
+
+<!--<i class="fas fa-robot stat-icon"></i>-->
+
+<!--<h2>24/7</h2>-->
+
+<!--<p>AI Tutor</p>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</section>-->
+<!-- ===================================
+        Statistics Section
+=================================== -->
+
+<section class="stats-section">
+
+    <div class="container">
+
+        <div class="row text-center">
+
+            <div class="col-lg-3 col-md-6 mb-4">
+
+                <div class="stats-card">
+
+                    <i class="fas fa-user-graduate"></i>
+
+                    <h2 class="counter" data-target="15000">0</h2>
+
+                    <p>Students</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+
+                <div class="stats-card">
+
+                    <i class="fas fa-book-open"></i>
+
+                    <h2 class="counter" data-target="120">0</h2>
+
+                    <p>Courses</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+
+                <div class="stats-card">
+
+                    <i class="fas fa-question-circle"></i>
+
+                    <h2 class="counter" data-target="500">0</h2>
+
+                    <p>Quizzes</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+
+                <div class="stats-card">
+
+                    <i class="fas fa-robot"></i>
+
+                    <h2>24/7</h2>
+
+                    <p>AI Tutor</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- About Section -->
+
+<!--<section id="about">-->
+
+<!--<div class="container">-->
+
+<!--<div class="row align-items-center" data-aos="fade-up">-->
+
+<!--<div class="col-lg-6">-->
+
+<!--<img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png"-->
+<!--class="img-fluid">-->
+
+<!--</div>-->
+
+<!--<div class="col-lg-6">-->
+
+<!--<h2 class="fw-bold mb-4">-->
+
+<!--About AI LearnMate-->
+
+<!--</h2>-->
+
+<!--<p>-->
+
+<!--AI LearnMate is an AI-powered Learning Management System built using-->
+<!--Python, Django, Django REST Framework, MySQL, Bootstrap and JavaScript.-->
+
+<!--</p>-->
+
+<!--<p>-->
+
+<!--The platform helps students learn smarter using personalized AI tutors,-->
+<!--interactive quizzes, study materials, recommendations, and real-time-->
+<!--progress tracking.-->
+
+<!--</p>-->
+
+<!--<h4 class="mt-4">-->
+
+<!--Why Choose AI LearnMate?-->
+
+<!--</h4>-->
+
+<!--<ul class="list-group list-group-flush">-->
+
+<!--<li class="list-group-item">-->
+<!--✅ Personalized AI Learning-->
+<!--</li>-->
+
+<!--<li class="list-group-item">-->
+<!--✅ Interactive Quiz System-->
+<!--</li>-->
+
+<!--<li class="list-group-item">-->
+<!--✅ Progress Tracking-->
+<!--</li>-->
+
+<!--<li class="list-group-item">-->
+<!--✅ Course Recommendations-->
+<!--</li>-->
+
+<!--<li class="list-group-item">-->
+<!--✅ Secure Authentication-->
+<!--</li>-->
+
+<!--<li class="list-group-item">-->
+<!--✅ Modern Responsive Design-->
+<!--</li>-->
+
+<!--</ul>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</section>-->
+<!--====================================
+        About AI LearnMate
+=====================================-->
+
+<section class="about-section" id="about">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <!-- Left Side -->
+
+            <div class="col-lg-6">
+
+                <img src="{% static 'images/about.png' %}"
+                     class="img-fluid about-image"
+                     alt="About AI LearnMate">
+
+            </div>
+
+            <!-- Right Side -->
+
+            <div class="col-lg-6">
+
+                <span class="section-tag">
+                    About AI LearnMate
+                </span>
+
+                <h2 class="section-title mt-3">
+
+                    Learn Smarter with
+                    <span>Artificial Intelligence</span>
+
+                </h2>
+
+                <p class="about-text mt-4">
+
+                    AI LearnMate is a modern AI-powered Learning
+                    Management System that helps students study
+                    smarter using personalized recommendations,
+                    AI Tutor assistance, quizzes, study materials,
+                    and real-time progress tracking.
+
+                </p>
+
+                <div class="about-features mt-4">
+
+                    <div class="feature-item">
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Personalized AI Learning
+
+                    </div>
+
+                    <div class="feature-item">
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Interactive Quiz Module
+
+                    </div>
+
+                    <div class="feature-item">
+
+                        <i class="fas fa-check-circle"></i>
+
+                        AI Tutor Assistance
+
+                    </div>
+
+                    <div class="feature-item">
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Study Materials & Notes
+
+                    </div>
+
+                    <div class="feature-item">
+
+                        <i class="fas fa-check-circle"></i>
+
+                        Real-time Progress Tracking
+
+                    </div>
+
+                </div>
+
+                <a href="#courses" class="btn btn-primary about-btn mt-4">
+
+                    Explore Courses
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= CONTACT ================= -->
+
+<!--<section id="contact" class="contact-section">-->
+
+<!--    <div class="container">-->
+
+<!--        <div class="row align-items-center gy-5">-->
+
+<!--            &lt;!&ndash; LEFT &ndash;&gt;-->
+
+<!--            <div class="col-lg-5">-->
+
+<!--                <h2 class="contact-title">-->
+
+<!--                    Contact Us-->
+
+<!--                </h2>-->
+
+<!--                <p class="contact-desc">-->
+
+<!--                    Have questions about AI LearnMate?-->
+
+<!--                    Our team is ready to help you with courses,-->
+<!--                    AI Tutor, quizzes, and study materials.-->
+
+<!--                </p>-->
+
+<!--                <div class="contact-info">-->
+
+<!--                    <div class="contact-box">-->
+
+<!--                        <i class="fas fa-phone-alt"></i>-->
+
+<!--                        <span>+91 9876543210</span>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="contact-box">-->
+
+<!--                        <i class="fas fa-envelope"></i>-->
+
+<!--                        <span>support@ailearnmate.com</span>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="contact-box">-->
+
+<!--                        <i class="fas fa-map-marker-alt"></i>-->
+
+<!--                        <span>Pune, Maharashtra, India</span>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="contact-box">-->
+
+<!--                        <i class="fas fa-clock"></i>-->
+
+<!--                        <span>Monday - Saturday (9 AM - 6 PM)</span>-->
+
+<!--                    </div>-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            &lt;!&ndash; RIGHT &ndash;&gt;-->
+
+<!--            <div class="col-lg-7 text-center">-->
+
+<!--                <img-->
+<!--                src="{% static 'images/contact-support.png' %}"-->
+<!--                class="img-fluid contact-image"-->
+<!--                alt="Support">-->
+
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--    </div>-->
+
+<!--</section>-->
+<section id="contact" class="contact-section">
+
+    <div class="container">
+
+        <div class="row align-items-center gy-5">
+
+            <!-- Left -->
+
+            <div class="col-lg-5">
+
+                <span class="section-tag">
+                    Contact Us
+                </span>
+
+                <h2 class="contact-title mt-3">
+                    We'd Love To Hear From You
+                </h2>
+
+                <p class="contact-desc">
+
+                    Have questions about AI LearnMate?
+
+                    Need help with Courses, AI Tutor,
+                    Study Materials or Quizzes?
+
+                    Our support team is always ready to help.
+
+                </p>
+
+                <div class="contact-info">
+
+                    <div class="contact-box">
+
+                        <i class="fas fa-phone-alt"></i>
+
+                        <div>
+
+                            <small>Call Us</small>
+
+                            <h6>+91 9876543210</h6>
+
+                        </div>
+
+                    </div>
+
+                    <div class="contact-box">
+
+                        <i class="fas fa-envelope"></i>
+
+                        <div>
+
+                            <small>Email</small>
+
+                            <h6>support@ailearnmate.com</h6>
+
+                        </div>
+
+                    </div>
+
+                    <div class="contact-box">
+
+                        <i class="fas fa-map-marker-alt"></i>
+
+                        <div>
+
+                            <small>Location</small>
+
+                            <h6>Pune, Maharashtra, India</h6>
+
+                        </div>
+
+                    </div>
+
+                    <div class="contact-box">
+
+                        <i class="fas fa-clock"></i>
+
+                        <div>
+
+                            <small>Working Hours</small>
+
+                            <h6>Mon - Sat (9 AM - 6 PM)</h6>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right -->
+
+            <div class="col-lg-7 text-center">
+
+
+
+                    <img
+                    src="{% static 'images/contact.png' %}"
+                    class="img-fluid contact-image"
+                    alt="Contact Support">
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="row gy-5">
+
+            <!-- Company -->
+
+            <div class="col-lg-4">
+
+                <h3 class="footer-logo">
+
+                    AI LearnMate
+
+                </h3>
+
+                <div class="footer-contact">
+
+                    <p>
+
+                        <i class="fas fa-phone-alt"></i>
+
+                        +91 9876543210
+
+                    </p>
+
+                    <p>
+
+                        <i class="fas fa-envelope"></i>
+
+                        support@ailearnmate.com
+
+                    </p>
+
+                    <p>
+
+                        <i class="fas fa-map-marker-alt"></i>
+
+                        Pune, Maharashtra, India
+
+                    </p>
+
+                    <p>
+
+                        <i class="far fa-clock"></i>
+
+                        Monday - Saturday
+
+                        <br>
+
+                        9:00 AM - 6:00 PM
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Quick Links -->
+
+            <div class="col-lg-2">
+
+                <h5>Quick Links</h5>
+
+                <ul class="footer-links">
+
+                    <li><a href="#">Home</a></li>
+
+                    <li><a href="#">Courses</a></li>
+
+                    <li><a href="#">Study Material</a></li>
+
+                    <li><a href="#">Quiz</a></li>
+
+                    <li><a href="#">Dashboard</a></li>
+
+                </ul>
+
+            </div>
+
+            <!-- Learning -->
+
+            <div class="col-lg-3">
+
+                <h5>Learning</h5>
+
+                <ul class="footer-links">
+
+                    <li><a href="#">AI Tutor</a></li>
+
+                    <li><a href="#">Progress Tracker</a></li>
+
+                    <li><a href="#">Recommendations</a></li>
+
+                    <li><a href="#">About</a></li>
+
+                    <li><a href="#">Contact</a></li>
+
+                </ul>
+
+            </div>
+
+            <!-- Social -->
+
+            <div class="col-lg-3">
+
+                <h5>Follow Us</h5>
+
+                <div class="social-icons">
+
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+                    <a href="#"><i class="fab fa-github"></i></a>
+
+                </div>
+
+                <div class="footer-text mt-4">
+
+                    Personalized Learning with AI Tutors.
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="copyright text-center">
+
+            © 2026 AI LearnMate. All Rights Reserved.
+
+        </div>
+
+    </div>
+
+</footer>
 {% endblock %}

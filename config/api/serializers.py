@@ -5,6 +5,8 @@ from courses.models import Category, Course, StudyMaterial
 from quizzes.models import Quiz,Question,StudentResult
 from progress_tracker.models import ProgressTracker
 from recommendations.models import Recommendation
+
+from ai_tutor.models import ChatSession, ChatMessage
 # ==========================================
 # AI LearnMate - API Serializers
 # Converts Django Models to JSON and
@@ -156,3 +158,29 @@ class RecommendationSerializer(serializers.ModelSerializer):
 class AIChatSerializer(serializers.Serializer):
 
     question = serializers.CharField()
+
+
+class ChatSessionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ChatSession
+        fields = "__all__"
+
+
+class ChatMessageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ChatMessage
+        fields = "__all__"
+
+
+from study_planner.models import StudyPlan
+
+
+class StudyPlanSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = StudyPlan
+
+        fields = "__all__"

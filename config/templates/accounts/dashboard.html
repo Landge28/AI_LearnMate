@@ -1,0 +1,905 @@
+{% extends "accounts/dashboard_base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="dashboard-header">
+
+    <h2>Student Dashboard</h2>
+
+    <p>Track your learning progress and continue your journey.</p>
+
+</div>
+<div class="user-summary">
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <p>
+
+                <strong>Email:</strong>
+
+                {{ request.user.email }}
+
+            </p>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <p>
+
+                <strong>Joined:</strong>
+
+                {{ request.user.date_joined|date:"d M Y" }}
+
+            </p>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <p>
+
+                <strong>Last Login:</strong>
+
+                {{ request.user.last_login|date:"d M Y H:i" }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-4">
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon blue">
+                <i class="fas fa-book"></i>
+            </div>
+
+            <div class="card-info">
+
+<!--                <h3>12</h3>-->
+                <h3>{{ total_courses }}</h3>
+
+                <p>Courses</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon green">
+                <i class="fas fa-file-alt"></i>
+            </div>
+
+            <div class="card-info">
+
+                <h3>38</h3>
+
+                <p>Study Materials</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon orange">
+                <i class="fas fa-question-circle"></i>
+            </div>
+
+            <div class="card-info">
+
+<!--                <h3>20</h3>-->
+                    <h3>{{ total_quizzes }}</h3>
+                <p>Quizzes</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon purple">
+                <i class="fas fa-chart-line"></i>
+            </div>
+
+            <div class="card-info">
+
+<!--                <h3>85%</h3>-->
+                <h3>{{ progress.progress_percentage|default:0 }}%</h3>
+
+                <p>Progress</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon red">
+                <i class="fas fa-robot"></i>
+            </div>
+
+            <div class="card-info">
+
+                <h3>42</h3>
+
+                <p>AI Tutor Sessions</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon cyan">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+
+            <div class="card-info">
+
+<!--                <h3>15</h3>-->
+                <h3>{{ recommendations }}</h3>
+
+                <p>Recommendations</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!--=========================-->
+<!--Continue Learning-->
+<!--=========================-->
+<div class="row mt-5">
+
+    <div class="col-lg-8">
+
+        <div class="learning-card">
+
+            <div class="learning-image">
+
+                <img src="{% static 'images/python-course.png' %}" alt="Course">
+
+            </div>
+
+            <div class="learning-content">
+
+                <span class="badge bg-primary">
+
+                    Continue Learning
+
+                </span>
+
+                <h3>
+
+                    {% if latest_course %}
+                    <h3>{{ latest_course.title }}</h3>
+                        {% else %}
+                     <h3>No Courses Available</h3>
+                    {% endif %}
+
+                </h3>
+
+                <p>
+
+                    {% if latest_course %}
+                <p>
+                    {{ latest_course.description|truncatewords:20 }}
+                </p>
+                    {% endif %}
+
+                </p>
+
+                <div class="progress mt-3">
+
+                    <div class="progress-bar"
+
+                         style="width:75%">
+
+                    </div>
+
+                </div>
+
+                <small>
+
+                    75% Completed
+
+                </small>
+
+                <br><br>
+
+<!--                <button class="btn btn-primary">-->
+
+<!--                    Continue Learning-->
+
+<!--                </button>-->
+                    {% if latest_course %}
+
+                    <a href="#"
+
+                    class="btn btn-primary">
+
+                    Continue Learning
+
+                    </a>
+
+                {% else %}
+
+            <button class="btn btn-secondary" disabled>
+
+                No Course
+
+            </button>
+
+            {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+
+<!--        Recent Activity card.-->
+
+<!--        <div class="activity-card">-->
+
+<!--            <h4>-->
+
+<!--                Recent Activity-->
+
+<!--            </h4>-->
+                <div class="activity-card">
+
+                <h4 class="mb-4">
+
+                    Recent Courses
+
+                </h4>
+<!--            <hr>-->
+
+<!--            <p>✅ Quiz Completed</p>-->
+
+<!--            <p>📚 Django Course Started</p>-->
+
+<!--            <p>🤖 Asked AI Tutor</p>-->
+
+<!--            <p>📈 Progress Updated</p>-->
+
+<!--        </div>-->
+                        {% if recent_courses %}
+
+                            {% for course in recent_courses %}
+
+                        <div class="course-item">
+
+                        <div>
+
+                            <h6>
+
+                                {{ course.title }}
+
+                            </h6>
+
+                            <small class="text-muted">
+
+                                    {{ course.duration }}
+
+                            </small>
+
+                        </div>
+
+                            <span class="badge bg-primary">
+
+                                    New
+
+                            </span>
+
+                        </div>
+
+                        <hr>
+
+                            {% endfor %}
+                                {% else %}
+
+                            <p>
+
+                                No courses available.
+
+                            </p>
+
+                                    {% endif %}
+                    </div>
+
+                </div>
+
+<div class="row mt-5">
+
+    <!-- Learning Analytics -->
+<div class="row mt-5">
+
+    <div class="col-lg-12">
+
+        <div class="widget-card">
+
+            <h3 class="mb-4">
+
+                📈 Progress Tracker
+
+            </h3>
+
+            {% if progress %}
+
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    <div class="progress-item">
+
+                        <span>Progress</span>
+
+                        <strong>{{ progress.progress_percentage|floatformat:0 }}%</strong>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="progress-item">
+
+                        <span>Quizzes Attempted</span>
+
+                        <strong>{{ progress.quizzes_attempted }}</strong>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="progress-item">
+
+                        <span>Average Score</span>
+
+                        <strong>{{ progress.average_score|floatformat:1 }}</strong>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="progress-item">
+
+                        <span>Highest Score</span>
+
+                        <strong>{{ progress.highest_score }}</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="alert alert-info">
+
+                No progress data available yet.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <div class="col-lg-8">
+
+        <div class="analytics-card">
+
+            <h3 class="mb-4">
+
+                Learning Analytics
+
+            </h3>
+
+            <div class="chart-container">
+
+                <div class="chart-bar">
+
+                    <div class="bar" style="height:65%"></div>
+
+                    <span>Mon</span>
+
+                </div>
+
+                <div class="chart-bar">
+
+                    <div class="bar" style="height:90%"></div>
+
+                    <span>Tue</span>
+
+                </div>
+
+                <div class="chart-bar">
+
+                    <div class="bar" style="height:70%"></div>
+
+                    <span>Wed</span>
+
+                </div>
+
+                <div class="chart-bar">
+
+                    <div class="bar" style="height:100%"></div>
+
+                    <span>Thu</span>
+
+                </div>
+
+                <div class="chart-bar">
+
+                    <div class="bar" style="height:80%"></div>
+
+                    <span>Fri</span>
+
+                </div>
+
+                <div class="chart-bar">
+
+                    <div class="bar" style="height:55%"></div>
+
+                    <span>Sat</span>
+
+                </div>
+
+                <div class="chart-bar">
+
+                    <div class="bar" style="height:85%"></div>
+
+                    <span>Sun</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Achievement -->
+
+    <div class="col-lg-4">
+
+        <div class="achievement-card">
+
+            <h3>
+
+                Achievements
+
+            </h3>
+
+            <div class="achievement-item">
+
+                🔥
+
+                <div>
+
+                    <strong>7 Day Streak</strong>
+
+                    <p>Keep Learning!</p>
+
+                </div>
+
+            </div>
+
+            <div class="achievement-item">
+
+                ⭐
+
+                <div>
+
+                    <strong>5 Courses Completed</strong>
+
+                    <p>Excellent Work</p>
+
+                </div>
+
+            </div>
+
+            <div class="achievement-item">
+
+                🤖
+
+                <div>
+
+                    <strong>42 AI Tutor Sessions</strong>
+
+                    <p>AI Assisted Learning</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-5">
+
+    <!-- AI Tutor -->
+
+<!--    <div class="col-lg-6">-->
+
+<!--        <div class="widget-card">-->
+
+<!--            <div class="widget-header">-->
+
+<!--                <h4>-->
+
+<!--                    🤖 AI Tutor-->
+
+<!--                </h4>-->
+
+<!--            </div>-->
+
+<!--            <p>-->
+
+<!--                Ask questions and get AI-powered explanations instantly.-->
+
+<!--            </p>-->
+
+<!--            <textarea-->
+<!--                class="form-control"-->
+<!--                rows="4"-->
+<!--                placeholder="Ask your AI Tutor..."></textarea>-->
+
+<!--            <button class="btn btn-primary mt-3">-->
+
+<!--                Ask AI Tutor-->
+
+<!--            </button>-->
+
+<!--        </div>-->
+
+<!--    </div>-->
+<div class="row mt-4">
+
+    <!-- AI Tutor -->
+    <div class="col-lg-8">
+
+        <div class="widget-card">
+
+            <div class="d-flex align-items-center mb-3">
+
+                <i class="fas fa-robot text-primary me-2 fs-4"></i>
+
+                <h3 class="mb-0">AI Tutor</h3>
+
+            </div>
+
+            <!-- Chat Area -->
+            <div id="chat-box" class="chat-box">
+
+                <div class="ai-message">
+
+                    <div class="message-header">
+                        🤖 AI Tutor
+                    </div>
+
+                    <div class="message-body">
+
+                        Hello {{ request.user.first_name|default:request.user.username }} 👋
+
+                        <br><br>
+
+                        Ask me anything about
+
+                        <b>Python</b>,
+                        <b>Django</b>,
+                        <b>Cyber Security</b>,
+                        <b>Machine Learning</b>
+                        or
+                        <b>Artificial Intelligence.</b>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Input -->
+
+            <div class="chat-input mt-3">
+
+                <input
+
+                    type="text"
+
+                    id="question"
+
+                    class="form-control"
+
+                    placeholder="Ask anything..."
+
+                >
+
+                <button
+
+                    id="askBtn"
+
+                    class="btn btn-primary"
+
+                    onclick="askAI()">
+
+                    <i class="fas fa-paper-plane"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Recommended Courses -->
+
+    <div class="col-lg-4">
+
+        <div class="widget-card">
+
+            <h4 class="mb-4">
+
+                💡 Recommended Courses
+
+            </h4>
+
+            <div class="recommend-item">
+
+                <i class="fas fa-book text-primary"></i>
+
+                Python Django Advanced
+
+            </div>
+
+            <div class="recommend-item">
+
+                <i class="fas fa-server text-success"></i>
+
+                REST API Development
+
+            </div>
+
+            <div class="recommend-item">
+
+                <i class="fas fa-brain text-danger"></i>
+
+                Machine Learning Basics
+
+            </div>
+
+            <div class="recommend-item">
+
+                <i class="fas fa-shield-alt text-warning"></i>
+
+                Ethical Hacking
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <div class="widget-card">
+
+            <h4>
+
+                📅 Today's Study Plan
+
+            </h4>
+
+            <ul class="study-plan">
+
+                <li>✅ Watch Django Lecture</li>
+
+                <li>⬜ Complete REST API Quiz</li>
+
+                <li>⬜ Revise Python OOP</li>
+
+                <li>⬜ Practice SQL Queries</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="widget-card text-center">
+
+            <h4>
+
+                🔥 Learning Streak
+
+            </h4>
+
+            <h1 class="display-3 text-primary">
+
+                7
+
+            </h1>
+
+            <p>
+
+                Days in a Row
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+async function askAI(){
+
+    const input=document.getElementById("question");
+    const chat=document.getElementById("chat-box");
+    const button=document.getElementById("askBtn");
+
+    const question=input.value.trim();
+
+    if(question==="") return;
+
+    chat.innerHTML += `
+        <div class="user-message">
+            ${question}
+        </div>
+    `;
+
+    input.value="";
+
+    button.disabled=true;
+
+    chat.innerHTML += `
+        <div class="ai-message" id="typing">
+
+            <div class="message-header">
+
+                🤖 AI Tutor
+
+            </div>
+
+            Thinking...
+
+        </div>
+    `;
+
+    chat.scrollTop=chat.scrollHeight;
+
+    try{
+
+        const response=await fetch("/api/ai-chat/",{
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":"application/json",
+
+                "X-CSRFToken":"{{ csrf_token }}"
+
+            },
+
+            body:JSON.stringify({
+
+                question:question
+
+            })
+
+        });
+
+        const data=await response.json();
+
+        document.getElementById("typing").remove();
+
+        chat.innerHTML += `
+            <div class="ai-message">
+
+                <div class="message-header">
+
+                    🤖 AI Tutor
+
+                </div>
+
+                ${data.answer}
+
+            </div>
+        `;
+
+    }
+
+    catch(error){
+
+        document.getElementById("typing").remove();
+
+        chat.innerHTML += `
+            <div class="ai-message">
+
+                Error connecting to AI Tutor.
+
+            </div>
+        `;
+
+    }
+
+    button.disabled=false;
+
+    chat.scrollTop=chat.scrollHeight;
+
+}
+
+document.getElementById("question").addEventListener("keypress",function(e){
+
+    if(e.key==="Enter"){
+
+        askAI();
+
+    }
+
+});
+
+</script>
+{% endblock %}

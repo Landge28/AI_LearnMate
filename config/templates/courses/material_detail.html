@@ -1,0 +1,65 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="widget-card">
+
+        <h2>{{ material.title }}</h2>
+
+        <p>
+
+            {{ material.course.title }}
+
+        </p>
+
+    </div>
+
+    {% if material.pdf_file %}
+
+    <div class="widget-card mt-4">
+
+        <h4>📄 PDF Viewer</h4>
+
+        <iframe
+
+            src="{{ material.pdf_file.url }}"
+
+            width="100%"
+
+            height="700"
+
+            style="border:none;">
+
+        </iframe>
+
+    </div>
+
+    {% endif %}
+
+    {% if material.video_url %}
+
+    <div class="widget-card mt-4">
+
+        <h4>🎥 Video Lesson</h4>
+
+        <a
+
+            href="{{ material.video_url }}"
+
+            target="_blank"
+
+            class="btn btn-danger">
+
+            Watch Video
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

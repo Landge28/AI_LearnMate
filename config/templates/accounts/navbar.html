@@ -1,0 +1,90 @@
+{% load static %}
+
+<nav class="top-navbar">
+
+    <div class="navbar-left">
+
+        <h4>
+           {% if request.user.first_name %}
+
+Welcome Back,
+
+{{ request.user.first_name }}
+
+👋
+
+{% else %}
+
+Welcome Back,
+
+{{ request.user.username }}
+
+👋
+
+{% endif %}
+        </h4>
+
+        <p>Let's continue your learning journey.</p>
+
+    </div>
+
+    <div class="navbar-right">
+
+        <div class="search-box">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                type="text"
+                placeholder="Search courses..."
+            >
+
+        </div>
+
+        <div class="notification">
+
+            <i class="fas fa-bell"></i>
+
+            <span class="notification-dot"></span>
+
+        </div>
+
+       <div class="profile">
+
+    <img src="{% static 'images/avatar.png' %}"
+         alt="Profile">
+
+    <div>
+
+        {% if request.user.first_name %}
+
+            <h6>
+
+                {{ request.user.first_name }}
+                {{ request.user.last_name }}
+
+            </h6>
+
+        {% else %}
+
+            <h6>
+
+                {{ request.user.username }}
+
+            </h6>
+
+        {% endif %}
+
+        <small>
+
+            {{ request.user.email }}
+
+        </small>
+
+    </div>
+
+</div>
+
+
+
+</nav>

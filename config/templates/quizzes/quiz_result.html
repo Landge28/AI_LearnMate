@@ -1,0 +1,45 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="widget-card text-center">
+
+        <h1>🎉 Quiz Completed</h1>
+
+        <br>
+
+        <h3>
+
+            Score:
+            {{ request.GET.score }}
+
+        </h3>
+
+        <br>
+
+        <h3>
+
+            Progress:
+            {{ request.GET.progress }}%
+
+        </h3>
+
+        <br>
+
+        <a
+
+            href="{% url 'dashboard' %}"
+
+            class="btn btn-primary">
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

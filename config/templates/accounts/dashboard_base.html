@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | AI LearnMate</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+    {% include "accounts/sidebar.html" %}
+
+    <div class="main-content">
+
+        {% include "accounts/navbar.html" %}
+
+        <div class="content-wrapper">
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/dashboard.js' %}"></script>
+
+
+<script>
+
+const askBtn = document.getElementById("ask-btn");
+
+askBtn.addEventListener("click", askAI);
+
+async function askAI(){
+
+    const question = document.getElementById("question").value;
+
+    if(question==="") return;
+
+    const chatBox = document.getElementById("chat-box");
+
+    chatBox.innerHTML += `
+
+
+<div class="ai-message" id="typing">
+
+    🤖 AI is thinking...
+
+</div>
+`;
+
+chatBox.scrollTop = chatBox.scrollHeight;
+
+    `;
+
+    document.getElementById("question").value="";
+
+    const response = await fetch("/api/ai-chat/",{
+
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json",
+
+            "X-CSRFToken": getCookie("csrftoken")
+
+        },
+
+        body:JSON.stringify({
+
+            question:question
+
+        })
+
+    });
+document.getElementById("typing").remove();
+    const data = await response.json();
+
+    chatBox.innerHTML += `
+
+        <div class="ai-message">
+
+            ${data.answer}
+
+        </div>
+
+    `;
+
+    chatBox.scrollTop=chatBox.scrollHeight;
+
+}
+
+function getCookie(name){
+
+    let cookieValue=null;
+
+    if(document.cookie && document.cookie!==""){
+
+        const cookies=document.cookie.split(";");
+
+        for(let cookie of cookies){
+
+            cookie=cookie.trim();
+
+            if(cookie.startsWith(name+"=")){
+
+                cookieValue=decodeURIComponent(cookie.substring(name.length+1));
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    return cookieValue;
+
+}
+
+document.getElementById("question")
+.addEventListener("keypress", function(e){
+
+    if(e.key === "Enter"){
+
+        askAI();
+
+    }
+
+});
+
+</script>
+
+<!-- Marked.js -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<script>
+
+marked.setOptions({
+
+    breaks:true,
+
+    gfm:true
+
+});
+
+</script>
+</body>
+
+</html>

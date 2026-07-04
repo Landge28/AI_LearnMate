@@ -57,3 +57,48 @@ class UserRegisterForm(forms.ModelForm):
             )
 
         return cleaned_data
+
+from django import forms
+from .models import StudentProfile
+
+
+class StudentProfileForm(forms.ModelForm):
+
+    class Meta:
+
+        model = StudentProfile
+
+        fields = [
+
+            "profile_image",
+
+            "phone",
+
+            "location",
+
+            "bio",
+
+            "learning_goal",
+
+        ]
+
+        widgets = {
+
+            "phone": forms.TextInput(attrs={
+                "class":"form-control"
+            }),
+
+            "location": forms.TextInput(attrs={
+                "class":"form-control"
+            }),
+
+            "bio": forms.Textarea(attrs={
+                "class":"form-control",
+                "rows":4
+            }),
+
+            "learning_goal": forms.TextInput(attrs={
+                "class":"form-control"
+            }),
+
+        }

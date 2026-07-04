@@ -1,0 +1,161 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>📚 Study Materials</h2>
+
+        <div class="search-box">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                id="materialSearch"
+                type="text"
+                class="form-control"
+                placeholder="Search study materials...">
+
+        </div>
+
+    </div>
+
+    <!-- Course Filter -->
+    <div class="mb-4">
+
+        <select
+            id="courseFilter"
+            class="form-select">
+
+            <option value="all">
+
+                All Courses
+
+            </option>
+
+            {% for material in materials %}
+
+            <option value="{{ material.course.title }}">
+
+                {{ material.course.title }}
+
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+    <!-- Materials -->
+    <div class="row">
+
+        {% for material in materials %}
+
+        <div class="col-lg-6 mb-4">
+
+            <div
+                class="material-card"
+                data-course="{{ material.course.title }}">
+
+                <div class="material-header d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h4>
+
+                            {{ material.title }}
+
+                        </h4>
+
+                        <small class="text-muted">
+
+                            {{ material.course.title }}
+
+                        </small>
+
+                    </div>
+
+                    {% if material.pdf_file %}
+
+                        <span class="badge bg-primary">
+
+                            PDF
+
+                        </span>
+
+                    {% elif material.video_url %}
+
+                        <span class="badge bg-danger">
+
+                            Video
+
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+                <hr>
+
+                <div class="d-flex gap-2 flex-wrap">
+
+                    {% if material.pdf_file %}
+
+                    <a
+                        href="{{ material.pdf_file.url }}"
+                        target="_blank"
+                        class="btn btn-primary">
+
+                        📄 Open PDF
+
+                    </a>
+
+                    <a
+                        href="{{ material.pdf_file.url }}"
+                        download
+                        class="btn btn-outline-primary">
+
+                        ⬇ Download
+
+                    </a>
+
+                    {% endif %}
+
+                    {% if material.video_url %}
+
+                    <a
+                        href="{{ material.video_url }}"
+                        target="_blank"
+                        class="btn btn-danger">
+
+                        ▶ Watch Video
+
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12 text-center">
+
+            <h4>No Study Materials Available.</h4>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

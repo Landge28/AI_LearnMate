@@ -261,7 +261,8 @@ class SubmitQuizAPIView(APIView):
 
         quiz_id = request.data.get('quiz_id')
 
-        answers = request.data.get('answers')
+        # answers = request.data.get('answers')
+        answers = request.data.get("answers", {})
 
         questions = Question.objects.filter(quiz_id=quiz_id)
 
@@ -285,7 +286,13 @@ class SubmitQuizAPIView(APIView):
 
         highest_score = max(r.score for r in all_results)
 
-        progress_percentage = (average_score / questions.count()) * 100
+        # progress_percentage = (average_score / questions.count()) * 100
+        total_questions = questions.count()
+
+        if total_questions > 0:
+            progress_percentage = (average_score / total_questions) * 100
+        else:
+            progress_percentage = 0
 
         progress, created = (ProgressTracker.objects.get_or_create(student=request.user))
 
@@ -417,6 +424,14 @@ class AIChatAPIView(APIView):
             ai = AIService()
 
             answer = ai.ask_ai(question)
+
+            if answer.startswith("⚠️") or answer.startswith("AI Error"):
+                return Response(
+                    {
+                        "answer": answer
+                    },
+                    status=200
+                )
 
             ChatMessage.objects.create(session=session,role="assistant",message=answer)
 

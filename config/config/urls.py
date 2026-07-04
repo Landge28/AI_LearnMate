@@ -21,6 +21,7 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
 
     # ==========================================
@@ -47,8 +48,16 @@ urlpatterns = [
     path('api/', include('api.urls')),
 
 
-    path("dashboard/",include("dashboard.urls")),
 
+
+
+    path('courses/', include('courses.urls')),
+    path("quizzes/", include("quizzes.urls")),
+
+    path("progress/",include("progress_tracker.urls")),
+
+    path("ai-tutor/",include("ai_tutor.urls")),
+    path("recommendations/",include("recommendations.urls")),
 ]
 
 
@@ -58,3 +67,9 @@ urlpatterns = [
     # Serves uploaded media files during development
 urlpatterns += static(
     settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

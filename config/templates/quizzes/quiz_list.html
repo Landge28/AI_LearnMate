@@ -1,0 +1,162 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="page-header mb-4">
+
+        <h2>📝 Available Quizzes</h2>
+
+        <p>Select a quiz and test your knowledge.</p>
+
+    </div>
+
+    <!-- Search Box -->
+    <div class="search-box mb-4">
+
+        <i class="fas fa-search"></i>
+
+        <input
+            id="quizSearch"
+            type="text"
+            class="form-control"
+            placeholder="Search quizzes...">
+
+    </div>
+
+    <div class="row">
+
+        {% for item in quiz_data %}
+
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="quiz-card">
+
+                <!-- Header -->
+                <div class="quiz-header d-flex justify-content-between align-items-center">
+
+                    <h4>{{ item.quiz.title }}</h4>
+
+                    {% if item.completed %}
+
+                    <span class="badge bg-success">
+
+                        Completed
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge bg-warning text-dark">
+
+                        Not Attempted
+
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+                <hr>
+
+                <!-- Quiz Details -->
+
+                <p>
+
+                    📚 <strong>Course:</strong>
+
+                    {{ item.quiz.course.title }}
+
+                </p>
+
+                <p>
+
+                    ❓ <strong>Questions:</strong>
+
+                    {{ item.quiz.question_set.count }}
+
+                </p>
+
+                <p>
+
+                    🎯 <strong>Marks:</strong>
+
+                    {{ item.quiz.total_marks }}
+
+                </p>
+
+                <p>
+
+                    ⏱ <strong>Time:</strong>
+
+                    20 Minutes
+
+                </p>
+
+                <p>
+
+                    🔄 <strong>Attempts:</strong>
+
+                    {{ item.attempts }}
+
+                </p>
+
+                <p>
+
+                    🏆 <strong>Best Score:</strong>
+
+                    {% if item.best_score %}
+
+                        {{ item.best_score }}
+
+                    {% else %}
+
+                        -
+
+                    {% endif %}
+
+                </p>
+
+                <!-- Button -->
+
+                <a
+                    href="{% url 'quiz_detail' item.quiz.id %}"
+                    class="btn btn-primary w-100">
+
+                    {% if item.completed %}
+
+                        🔄 Retake Quiz
+
+                    {% else %}
+
+                        ▶ Start Quiz
+
+                    {% endif %}
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-info">
+
+                No quizzes available.
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

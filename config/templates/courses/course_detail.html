@@ -1,0 +1,218 @@
+{% extends "accounts/dashboard_base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+   <div class="course-hero">
+
+    <div class="course-overlay">
+
+        <span class="badge bg-light text-dark">
+
+            {{ course.category.name }}
+
+        </span>
+
+        <h1>
+
+            {{ course.title }}
+
+        </h1>
+
+        <p>
+
+            {{ course.description }}
+
+        </p>
+
+        <div class="mt-4">
+
+            <span class="badge bg-primary">
+
+                ⏱ {{ course.duration }}
+
+            </span>
+
+            <span class="badge bg-success">
+
+                ⭐ Beginner
+
+            </span>
+
+        </div>
+
+        <div class="mt-4">
+
+            <a href="#"
+
+               class="btn btn-light btn-lg">
+
+                ▶ Continue Learning
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <div class="widget-card mt-4">
+
+        <h3>
+
+            📄 Study Materials
+
+        </h3>
+
+       {% for material in materials %}
+
+<div class="course-item">
+
+    <div>
+
+        <h5>
+
+            📄 {{ material.title }}
+
+        </h5>
+
+    </div>
+
+    <div>
+
+        {% if material.pdf_file %}
+
+        <a
+
+            href="{{ material.pdf_file.url }}"
+
+            target="_blank"
+
+            class="btn btn-primary">
+
+            Open PDF
+
+        </a>
+
+        {% endif %}
+
+        {% if material.video_url %}
+
+        <a
+
+            href="{{ material.video_url }}"
+
+            target="_blank"
+
+            class="btn btn-danger">
+
+            Watch Video
+
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<hr>
+
+{% empty %}
+
+<p>No study materials available.</p>
+
+{% endfor %}
+
+    <div class="widget-card mt-4">
+
+        <h3>
+
+            📝 Quizzes
+
+        </h3>
+
+       {% for quiz in quizzes %}
+
+<div class="course-item">
+
+    <div>
+
+        <h5>
+
+            📝 {{ quiz.title }}
+
+        </h5>
+
+        <small>
+
+            {{ quiz.total_marks }} Marks
+
+        </small>
+
+    </div>
+
+    <a href="{% url 'quiz_detail' quiz.id %}"
+
+        class="btn btn-success">
+
+        Start Quiz
+
+    </a>
+
+</div>
+
+<hr>
+
+{% empty %}
+
+<p>
+
+No Quiz Available
+
+</p>
+
+{% endfor %}
+<div class="widget-card mt-4">
+
+    <h3>
+
+        📊 Your Progress
+
+    </h3>
+
+    {% if progress %}
+
+    <div class="progress mt-4">
+
+        <div
+
+            class="progress-bar"
+
+            style="width:{{ progress.progress_percentage }}%">
+
+        </div>
+
+    </div>
+
+    <p class="mt-3">
+
+        {{ progress.progress_percentage }}%
+
+    </p>
+
+    {% else %}
+
+    <p>
+
+        No progress available.
+
+    </p>
+
+    {% endif %}
+
+</div>
+{% endblock %}

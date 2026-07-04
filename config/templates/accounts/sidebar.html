@@ -1,0 +1,78 @@
+<div class="sidebar">
+
+    <!-- Logo -->
+    <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>AI LearnMate</h3>
+    </div>
+
+    <!-- Main Menu -->
+    <ul class="menu">
+
+        <li>
+            <a href="{% url 'dashboard' %}">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'course_list' %}">
+                <i class="fas fa-book"></i>
+                <span>Courses</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'study_material_list' %}">
+                <i class="fas fa-file-alt"></i>
+                <span>Study Materials</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'quiz_list' %}">
+                <i class="fas fa-question-circle"></i>
+                <span>Quiz</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'progress_tracker' %}">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress Tracker</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'ai_tutor' %}">
+                <i class="fas fa-robot"></i>
+                <span>AI Tutor</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'recommendations' %}">
+                <i class="fas fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- Bottom Menu -->
+    <div class="sidebar-bottom">
+
+        <a href="{% url 'profile' %}">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+
+        <a href="{% url 'logout' %}">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</div>

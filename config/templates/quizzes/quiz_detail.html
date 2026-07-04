@@ -1,0 +1,350 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h4>{{ quiz.title }}</h4>
+
+    <div class="badge bg-danger fs-5 p-3">
+
+        ⏱ <span id="timer">20:00</span>
+
+    </div>
+
+</div>
+    <div class="widget-card">
+
+        <h2>{{ quiz.title }}</h2>
+
+        <p>
+
+            Total Marks : {{ quiz.total_marks }}
+
+        </p>
+
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+        <div class="mb-4">
+
+    <h5>
+
+        Question
+
+        <span id="currentQuestion">
+
+            1
+
+        </span>
+
+        /
+
+        {{ questions|length }}
+
+    </h5>
+
+</div>
+        <div class="progress mb-4">
+
+    <div
+
+        id="quizProgress"
+
+        class="progress-bar"
+
+        style="width:10%">
+
+    </div>
+
+</div>
+        {% for question in questions %}
+        <div class="quiz-question">
+        <div class="widget-card mt-4">
+
+            <h5>
+
+                {{ forloop.counter }}.
+
+                {{ question.question_text }}
+
+            </h5>
+
+            <hr>
+
+            <div class="form-check">
+
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="{{ question.id }}"
+                    value="A">
+
+                <label>
+
+                    {{ question.option_a }}
+
+                </label>
+
+            </div>
+
+            <div class="form-check">
+
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="{{ question.id }}"
+                    value="B">
+
+                <label>
+
+                    {{ question.option_b }}
+
+                </label>
+
+            </div>
+
+            <div class="form-check">
+
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="{{ question.id }}"
+                    value="C">
+
+                <label>
+
+                    {{ question.option_c }}
+
+                </label>
+
+            </div>
+
+            <div class="form-check">
+
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="{{ question.id }}"
+                    value="D">
+
+                <label>
+
+                    {{ question.option_d }}
+
+                </label>
+
+            </div>
+
+        </div>
+</div>
+        {% endfor %}
+<div class="quiz-navigation">
+
+    <button
+        type="button"
+        class="btn btn-secondary"
+        id="prevBtn">
+
+        ← Previous
+
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-primary"
+        id="nextBtn">
+
+        Next →
+
+    </button>
+
+</div>
+       <button
+    id="submitBtn"
+    type="button"
+    class="btn btn-success mt-4"
+    onclick="submitQuiz()"
+    style="display:none;">
+
+    Finish Quiz
+
+</button>
+    </form>
+
+</div>
+<script>
+
+async function submitQuiz(){
+
+    const answers = {};
+
+    document.querySelectorAll("input[type=radio]:checked").forEach((radio)=>{
+
+        answers[radio.name] = radio.value;
+
+    });
+
+    try{
+
+        const response = await fetch("/api/submit-quiz/",{
+
+            method:"POST",
+
+            credentials:"same-origin",
+            headers:{
+
+                "Content-Type":"application/json",
+
+                "X-CSRFToken":"{{ csrf_token }}"
+
+            },
+
+
+            body:JSON.stringify({
+
+                quiz_id: {{ quiz.id }},
+
+                answers: answers
+
+            })
+
+        });
+
+        const data = await response.json();
+
+console.log("Status:", response.status);
+console.log("Response:", data);
+
+if(response.ok){
+    window.onbeforeunload = null;
+    window.location.href =
+        "{% url 'quiz_result' %}?score=" +
+        data.score +
+        "&progress=" +
+        data.progress;
+
+}else{
+
+    alert(JSON.stringify(data));
+
+}
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("Unable to connect to server.");
+
+    }
+
+}
+const questions=document.querySelectorAll(".quiz-question");
+
+let current=0;
+
+showQuestion(current);
+
+function showQuestion(index){
+
+    questions.forEach(q=>q.classList.remove("active"));
+
+    questions[index].classList.add("active");
+    document.getElementById("currentQuestion").innerText=index+1;
+
+    document.getElementById("quizProgress").style.width =
+((index + 1) / questions.length * 100) + "%";
+
+const submitBtn = document.getElementById("submitBtn");
+
+if(index === questions.length - 1){
+
+    submitBtn.style.display="inline-block";
+
+    nextBtn.style.display="none";
+
+}else{
+
+    submitBtn.style.display="none";
+
+    nextBtn.style.display="inline-block";
+
+}
+
+}
+
+document.getElementById("nextBtn").onclick=function(){
+
+    if(current<questions.length-1){
+
+        current++;
+
+        showQuestion(current);
+
+    }
+
+}
+
+document.getElementById("prevBtn").onclick=function(){
+
+    if(current>0){
+
+        current--;
+
+        showQuestion(current);
+
+    }
+
+}
+
+    let totalTime = 20 * 60; // 20 minutes
+
+const timer = document.getElementById("timer");
+
+const countdown = setInterval(function(){
+
+    let minutes = Math.floor(totalTime / 60);
+
+    let seconds = totalTime % 60;
+
+    timer.innerHTML =
+    String(minutes).padStart(2,"0") +
+    ":" +
+    String(seconds).padStart(2,"0");
+
+if(totalTime <= 300){
+
+    timer.style.color="yellow";
+
+}
+
+if(totalTime <= 60){
+
+    timer.style.color="red";
+
+}
+    totalTime--;
+
+    if(totalTime < 0){
+
+        clearInterval(countdown);
+
+        alert("Time is over! Quiz will be submitted.");
+
+        submitQuiz();
+
+    }
+
+},1000);
+
+
+    window.onbeforeunload = function(){
+
+    return "Your quiz is still in progress.";
+
+};
+</script>
+{% endblock %}

@@ -8,6 +8,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
 from .forms import UserRegisterForm
+from courses.models import Course, StudyMaterial
+from quizzes.models import Quiz
+from progress_tracker.models import ProgressTracker
+from recommendations.models import Recommendation
+
+from .models import StudentProfile
+
+from django.contrib.auth.decorators import login_required
+
+from quizzes.models import StudentResult
+
+from courses.models import Course
+
+from .forms import StudentProfileForm
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
 
 # ==========================================
 # ACCOUNTS APP - USER AUTHENTICATION VIEWS
@@ -98,14 +116,80 @@ def login_view(request):
 # ==========================================
 
 
+# def dashboard_view(request):
+#
+#     if not request.user.is_authenticated:
+#
+#         return redirect('login')
+#
+#     return render(request,'accounts/dashboard.html')
+# @login_required
+# def dashboard_view(request):
+#
+#     user = request.user
+#
+#     total_courses = Course.objects.count()
+#
+#     total_quizzes = Quiz.objects.count()
+#
+#     progress = ProgressTracker.objects.filter(student=user).first()
+#
+#     total_recommendations = Recommendation.objects.filter(student=user).count()
+#
+#     context = {
+#
+#         "total_courses": total_courses,
+#         "total_materials": total_materials,
+#         "total_quizzes": total_quizzes,
+#         "recommendations": total_recommendations,
+#         "progress": progress,
+#
+#         # User Details
+#         "user": request.user,
+#
+#     }
+#
+#     return render(
+#         request,
+#         "accounts/dashboard.html",
+#         context,
+#     )
+@login_required
 def dashboard_view(request):
 
-    if not request.user.is_authenticated:
+    user = request.user
 
-        return redirect('login')
+    total_courses = Course.objects.count()
 
-    return render(request,'accounts/dashboard.html')
+    total_materials = StudyMaterial.objects.count()
 
+    total_quizzes = Quiz.objects.count()
+
+    latest_course = Course.objects.order_by("-created_at").first()
+
+    total_recommendations = Recommendation.objects.filter(student=user).count()
+
+    progress = ProgressTracker.objects.filter(student=user).first()
+
+    recent_courses = Course.objects.order_by("-created_at")[:5]
+
+    context = {
+
+        "total_courses": total_courses,
+        "total_materials": total_materials,
+        "total_quizzes": total_quizzes,
+        "recommendations": total_recommendations,
+        "progress": progress,
+        "latest_course": latest_course,
+        "recent_courses": recent_courses,
+
+    }
+
+    return render(
+        request,
+        "accounts/dashboard.html",
+        context
+    )
 # ==========================================
 # USER LOGOUT VIEW
 # Logs out the current user
@@ -122,3 +206,129 @@ def logout_view(request):
 
     return response
 
+@login_required
+def profile(request):
+
+    user = request.user
+
+    # Get or create student profile
+    profile, created = StudentProfile.objects.get_or_create(
+        user=user
+    )
+
+    # Progress
+    progress = ProgressTracker.objects.filter(
+        student=user
+    ).first()
+
+    # Quiz Attempts
+    quiz_attempts = StudentResult.objects.filter(
+        student=user
+    ).count()
+
+    # Total Courses
+    total_courses = Course.objects.count()
+
+    context = {
+
+        "user": user,
+
+        "profile": profile,
+
+        "progress": progress,
+
+        "quiz_attempts": quiz_attempts,
+
+        "total_courses": total_courses,
+
+    }
+
+    return render(
+        request,
+        "accounts/profile.html",
+        context
+    )
+
+@login_required
+def edit_profile(request):
+
+    profile, created = StudentProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    if request.method == "POST":
+
+        form = StudentProfileForm(
+
+            request.POST,
+
+            request.FILES,
+
+            instance=profile
+
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect("profile")
+
+    else:
+
+        form = StudentProfileForm(instance=profile)
+
+    return render(
+
+        request,
+
+        "accounts/edit_profile.html",
+
+        {
+
+            "form": form
+
+        }
+
+    )
+
+@login_required
+def change_password(request):
+
+    if request.method == "POST":
+
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+
+            user = form.save()
+
+            update_session_auth_hash(request, user)
+
+            print("SUCCESS")
+
+            return redirect("change_password_done")
+
+        else:
+
+            print(form.errors)
+
+    else:
+
+        form = PasswordChangeForm(request.user)
+
+    return render(
+        request,
+        "accounts/change_password.html",
+        {
+            "form": form
+        }
+    )
+
+@login_required
+def change_password_done(request):
+
+    return render(
+        request,
+        "accounts/change_password_done.html"
+    )

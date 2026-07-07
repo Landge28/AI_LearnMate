@@ -3,6 +3,9 @@ from django.db import models
 # Create your models here.
 from django.db import models
 
+from django.contrib.auth.models import User
+import uuid
+
 # ==========================================
 # CATEGORY MODEL
 # Stores course categories
@@ -58,3 +61,30 @@ class StudyMaterial(models.Model):
 
     def __str__(self):
         return self.title
+
+class Certificate(models.Model):
+
+    student = models.ForeignKey(User,on_delete=models.CASCADE)
+
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+
+    certificate_id = models.CharField(max_length=50,unique=True,editable=False)
+
+    issued_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("student", "course")
+
+    def save(self, *args, **kwargs):
+
+        if not self.certificate_id:
+
+            self.certificate_id = (
+                f"ALM-{uuid.uuid4().hex[:10].upper()}"
+            )
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+
+        return self.certificate_id

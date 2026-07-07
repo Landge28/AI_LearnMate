@@ -1,0 +1,49 @@
+{% extends "accounts/dashboard_base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="widget-card text-center">
+
+        <h1 class="text-success">
+            ✅ Certificate Verified
+        </h1>
+
+        <hr>
+
+        <h3>
+            {{ certificate.student.get_full_name|default:certificate.student.username }}
+        </h3>
+
+        <p>
+            Successfully completed
+        </p>
+
+        <h4>
+            {{ certificate.course.title }}
+        </h4>
+
+        <br>
+
+        <p>
+
+            <strong>Certificate ID:</strong>
+
+            {{ certificate.certificate_id }}
+
+        </p>
+
+        <p>
+
+            <strong>Issued On:</strong>
+
+            {{ certificate.issued_at|date:"d F Y" }}
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

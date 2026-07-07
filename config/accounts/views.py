@@ -307,7 +307,7 @@ def change_password(request):
 
             print("SUCCESS")
 
-            return redirect("change_password_done")
+            return redirect("change_password_donepython manage.py runserver")
 
         else:
 

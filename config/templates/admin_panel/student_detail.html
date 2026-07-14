@@ -1,0 +1,72 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Student Profile
+
+</h2>
+
+<a
+href="{% url 'edit_student' student.id %}"
+class="btn btn-warning mb-3">
+
+Edit Student
+
+</a>
+
+<a
+href="{% url 'delete_student' student.id %}"
+class="btn btn-danger mb-3">
+
+Delete Student
+
+</a>
+
+<div class="card-box">
+
+<div class="text-center mb-4">
+
+{% if profile.profile_image %}
+
+<img
+src="{{ profile.profile_image.url }}"
+width="170"
+class="rounded-circle">
+
+{% else %}
+
+<img
+src="https://ui-avatars.com/api/?name={{ student.username }}&size=180"
+class="rounded-circle">
+
+{% endif %}
+
+<h3 class="mt-3">
+
+{{ student.get_full_name|default:student.username }}
+
+</h3>
+
+</div>
+
+<hr>
+
+<p><b>Username :</b> {{ student.username }}</p>
+
+<p><b>Email :</b> {{ student.email }}</p>
+
+<p><b>Phone :</b> {{ profile.phone }}</p>
+
+<p><b>Location :</b> {{ profile.location }}</p>
+
+<p><b>Bio :</b> {{ profile.bio }}</p>
+
+<p><b>Learning Goal :</b> {{ profile.learning_goal }}</p>
+
+<p><b>Joined :</b> {{ student.date_joined|date:"d M Y" }}</p>
+
+</div>
+
+{% endblock %}

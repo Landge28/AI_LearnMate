@@ -1,0 +1,45 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<div class="card-box">
+
+<h2 class="text-danger">
+
+Delete Quiz
+
+</h2>
+
+<hr>
+
+<p>
+
+Are you sure you want to delete
+
+<strong>{{ quiz.title }}</strong>?
+
+</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<button class="btn btn-danger">
+
+Delete
+
+</button>
+
+<a
+href="{% url 'admin_quizzes' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+{% endblock %}

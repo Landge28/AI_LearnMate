@@ -1,0 +1,88 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2>Quiz Management</h2>
+
+<a href="{% url 'admin_add_quiz' %}"
+class="btn btn-primary mb-3">
+
++ Add Quiz
+
+</a>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Course</th>
+
+<th>Quiz</th>
+
+<th>Total Marks</th>
+
+<th>Created</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for quiz in quizzes %}
+
+<tr>
+
+<td>{{ quiz.id }}</td>
+
+<td>{{ quiz.course.title }}</td>
+
+<td>{{ quiz.title }}</td>
+
+<td>{{ quiz.total_marks }}</td>
+
+<td>{{ quiz.created_at|date:"d M Y" }}</td>
+
+<td>
+
+<a
+href="{% url 'admin_questions' quiz.id %}"
+class="btn btn-info btn-sm">
+
+Questions
+
+</a>
+
+<a
+href="{% url 'admin_edit_quiz' quiz.id %}"
+class="btn btn-warning btn-sm">
+
+Edit
+
+</a>
+
+<a
+href="{% url 'admin_delete_quiz' quiz.id %}"
+class="btn btn-danger btn-sm">
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}

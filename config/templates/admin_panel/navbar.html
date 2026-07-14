@@ -1,0 +1,126 @@
+<nav class="admin-navbar">
+
+    <div class="navbar-left">
+
+        <h2>{{ page_title|default:"Admin Dashboard" }}</h2>
+
+    </div>
+
+    <div class="navbar-right">
+
+        <div class="dropdown">
+
+    <div
+        class="admin-notification"
+        data-bs-toggle="dropdown"
+        style="cursor:pointer;"
+    >
+
+        <i class="fas fa-bell"></i>
+
+        {% if admin_notifications %}
+        <span class="notification-badge">
+            {{ admin_notifications|length }}
+        </span>
+        {% endif %}
+
+    </div>
+
+    <ul class="dropdown-menu dropdown-menu-end notification-dropdown shadow">
+
+        <li class="dropdown-header">
+
+            Notifications
+
+        </li>
+
+        {% for n in admin_notifications %}
+
+        <li>
+
+            <div class="notification-item">
+
+    <div class="notification-title">
+
+        {{ n.title }}
+
+    </div>
+
+    <div class="notification-message">
+
+        {{ n.message|truncatechars:70 }}
+
+    </div>
+
+    <div class="notification-time">
+
+        {{ n.created_at|date:"d M Y H:i" }}
+
+    </div>
+
+</div>
+
+        </li>
+
+        {% if not forloop.last %}
+        <li><hr class="dropdown-divider"></li>
+        {% endif %}
+
+        {% empty %}
+
+        <li>
+
+            <div class="dropdown-item text-center">
+
+                No Notifications
+
+            </div>
+
+        </li>
+
+        {% endfor %}
+
+        <li>
+
+<hr class="dropdown-divider">
+
+</li>
+
+<li>
+
+<a href="{% url 'admin_notifications' %}"
+class="dropdown-item text-center fw-bold">
+
+View All Notifications
+
+</a>
+
+</li>
+
+    </ul>
+
+</div>
+
+        <div class="admin-profile">
+
+            <div class="admin-avatar">
+
+                <i class="fas fa-user"></i>
+
+            </div>
+
+            <div>
+
+                <strong>{{ request.user.username }}</strong>
+
+                <br>
+
+                <small>Administrator</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>

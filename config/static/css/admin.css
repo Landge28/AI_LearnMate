@@ -1,0 +1,560 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#f5f7fb;
+    font-family:Segoe UI;
+}
+
+.wrapper{
+
+    display:flex;
+}
+
+.sidebar{
+
+    width:260px;
+
+    height:100vh;
+
+    background:#172554;
+
+    color:white;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+    scrollbar-width:thin;
+
+}
+
+/*.logo{
+
+    position:sticky;
+
+    top:0;
+
+    background:#172554;
+
+    z-index:100;
+
+    text-align:center;
+
+    padding:30px 20px;
+
+}
+
+.logo h3{
+
+    margin-top:15px;
+
+    font-weight:bold;
+}
+
+.logo i{
+
+    font-size:55px;
+
+    color:#60a5fa;
+}*/
+.logo{
+
+    position:sticky;
+
+    top:0;
+
+    background:#172554;
+
+    z-index:100;
+
+    text-align:center;
+
+    padding:18px 20px 8px;
+
+}
+
+.logo h3{
+
+    margin-top:10px;
+
+    margin-bottom:4px;
+
+    font-weight:bold;
+
+}
+
+.logo p{
+
+    margin-bottom:0;
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+    padding:0;
+}
+
+.sidebar::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+
+    background:#3b82f6;
+
+    border-radius:20px;
+
+}
+
+.sidebar::-webkit-scrollbar-track{
+
+    background:#172554;
+
+}
+/*.menu-title{
+
+    color:#94a3b8;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    margin:20px 30px 8px;
+
+    text-transform:uppercase;
+
+}*/
+.menu-title{
+
+    color:#94a3b8;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    margin:8px 30px 8px;
+
+    text-transform:uppercase;
+
+}
+
+
+.sidebar ul li{
+
+    margin:8px 18px;
+}
+
+.sidebar ul li a{
+
+    color:white;
+
+    display:block;
+
+    text-decoration:none;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    transition:.3s;
+}
+
+.sidebar ul li a:hover{
+
+    background:white;
+
+    color:#172554;
+}
+
+.content{
+
+    margin-left:260px;
+
+    width:100%;
+
+    padding:35px;
+}
+
+.card-box{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.stat-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.stat-card h2{
+
+    font-weight:bold;
+}
+/* Admin Panel CSS */
+.card-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+    font-size:24px;
+
+    margin-bottom:18px;
+
+}
+
+.stat-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.12);
+
+}
+
+.stat-card h2{
+
+    font-size:34px;
+
+    font-weight:bold;
+
+}
+
+.stat-card p{
+
+    margin-bottom:6px;
+
+    color:#555;
+
+}
+
+.stat-card small{
+
+    color:#888;
+
+}
+
+.admin-navbar{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:18px 30px;
+
+    margin-bottom:30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.admin-notification{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:#f1f5f9;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.admin-notification:hover{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.admin-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.admin-avatar{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+
+}
+
+.sidebar ul li a.active{
+
+    background:white;
+
+    color:#172554;
+
+    font-weight:600;
+
+    box-shadow:0 8px 18px rgba(255,255,255,.18);
+
+}
+
+.sidebar ul li a.active i{
+
+    color:#2563eb;
+
+}
+
+.notification-dropdown{
+
+    width:340px;
+
+    max-height:420px;
+
+    overflow-y:auto;
+
+}
+
+.notification-badge{
+
+    position:absolute;
+
+    top:-5px;
+
+    right:-5px;
+
+    width:20px;
+
+    height:20px;
+
+    border-radius:50%;
+
+    background:red;
+
+    color:white;
+
+    font-size:11px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:bold;
+
+}
+
+/* Notification Dropdown */
+
+.notification-dropdown{
+
+    width:360px;
+    border:none;
+    border-radius:16px;
+    padding:0;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+}
+
+.notification-dropdown .dropdown-header{
+
+    background:#172554;
+    color:white;
+    padding:15px 20px;
+    font-size:16px;
+    font-weight:600;
+
+}
+
+.notification-item{
+
+    padding:15px 20px;
+    transition:.25s;
+    cursor:pointer;
+
+}
+
+.notification-item:hover{
+
+    background:#f8fafc;
+
+}
+
+.notification-title{
+
+    font-weight:600;
+    color:#111827;
+
+}
+
+.notification-message{
+
+    font-size:13px;
+    color:#6b7280;
+    margin-top:4px;
+
+}
+
+.notification-time{
+
+    font-size:12px;
+    color:#9ca3af;
+
+}
+
+/* ==========================
+   Professional Admin Tables
+========================== */
+
+.table-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.table{
+
+    margin-bottom:0;
+
+}
+
+.table thead th{
+
+    background:#f8fafc;
+
+    color:#172554;
+
+    font-weight:600;
+
+    border:none;
+
+    padding:18px;
+
+}
+
+.table tbody td{
+
+    padding:18px;
+
+    vertical-align:middle;
+
+}
+
+.table tbody tr{
+
+    transition:.25s;
+
+}
+
+.table tbody tr:hover{
+
+    background:#f8fbff;
+
+}
+
+.table td{
+
+    border-color:#eef2f7;
+
+}
+

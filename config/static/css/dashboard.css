@@ -310,7 +310,7 @@ body{
 
 }
 
-.notification-dot{
+/*.notification-dot{
 
     width:10px;
 
@@ -326,7 +326,51 @@ body{
 
     right:12px;
 
+}*/
+
+.notification-menu{
+
+    width:350px;
+
+    max-height:400px;
+
+    overflow-y:auto;
+
 }
+
+.notification-menu .dropdown-item{
+
+    white-space:normal;
+
+    padding:12px;
+
+}
+
+.notification-menu .dropdown-item:hover{
+
+    background:#f8f9fa;
+
+}
+
+.notification-dot{
+
+    width:10px;
+
+    height:10px;
+
+    background:red;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    top:5px;
+
+    right:2px;
+
+}
+
+
 
 .profile{
 
@@ -1527,5 +1571,47 @@ body{
 .main-content{
 
     overflow-x:hidden;
+
+}
+
+/* ==========================
+   Premium Sidebar Scrollbar
+========================== */
+
+.sidebar,
+.menu{
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.35) transparent;
+
+}
+
+/* Chrome */
+
+.sidebar::-webkit-scrollbar,
+.menu::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.sidebar::-webkit-scrollbar-track,
+.menu::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.menu::-webkit-scrollbar-thumb{
+
+    background:rgba(255,255,255,.30);
+    border-radius:20px;
+
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover{
+
+    background:#60a5fa;
 
 }

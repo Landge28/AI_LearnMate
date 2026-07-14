@@ -1,0 +1,37 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Edit Question
+
+</h2>
+
+<div class="card-box">
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button class="btn btn-success">
+
+Update Question
+
+</button>
+
+<a
+href="{% url 'admin_questions' question.quiz.id %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+{% endblock %}

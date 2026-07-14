@@ -1,0 +1,148 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between mb-4">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="mb-0">
+
+
+        Study Materials
+
+    </h2>
+    <div class="d-flex gap-3">
+
+        <input
+            type="text"
+            id="tableSearch"
+            class="form-control"
+            placeholder="Search..."
+            style="width:250px;">
+
+        <a href="{% url 'admin_add_material' %}"
+           class="btn btn-primary">
+
+            Add Material
+
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table class="table" id="dataTable">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Title</th>
+
+<th>Course</th>
+
+<th>File</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for material in materials %}
+
+<tr>
+
+<td>{{ material.id }}</td>
+
+<td>{{ material.title }}</td>
+
+<td>{{ material.course.title }}</td>
+
+<td>
+
+{% if material.file %}
+
+<a href="{{ material.file.url }}">
+
+Download
+
+</a>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a
+href="{% url 'admin_edit_material' material.id %}"
+class="btn btn-warning btn-sm">
+
+Edit
+
+</a>
+
+<a
+href="{% url 'admin_delete_material' material.id %}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this material?')">
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+const search = document.getElementById("tableSearch");
+
+search.addEventListener("keyup", function(){
+
+    const filter = this.value.toLowerCase();
+
+    const rows = document.querySelectorAll("#dataTable tbody tr");
+
+    rows.forEach(function(row){
+
+        const text = row.innerText.toLowerCase();
+
+        if(text.includes(filter)){
+
+            row.style.display="";
+
+        }
+
+        else{
+
+            row.style.display="none";
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

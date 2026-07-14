@@ -1,0 +1,49 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h2 class="text-danger">
+
+Delete Notification
+
+</h2>
+
+<hr>
+
+<p>
+
+Are you sure you want to delete
+
+<strong>{{ notification.title }}</strong>?
+
+</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<button class="btn btn-danger">
+
+Delete
+
+</button>
+
+<a
+href="{% url 'admin_notifications' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

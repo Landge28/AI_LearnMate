@@ -1,45 +1,99 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div class="row justify-content-center">
+<div class="auth-container">
 
-<div class="col-md-5">
+    <div class="auth-card">
 
-<div class="card shadow">
+        <div class="auth-header">
 
-<div class="card-header">
+            <i class="fas fa-graduation-cap auth-logo"></i>
 
-<h3>Login</h3>
+            <h2>AI LearnMate</h2>
+
+            <p>Welcome Back 👋</p>
+
+        </div>
+
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+
+                <input type="text" name="username" class="form-control" placeholder="Username">
+
+            </div>
+
+            <div class="input-group mb-4">
+
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+
+                <input id="password" type="password" name="password" class="form-control" placeholder="Password">
+
+                <button
+                    class="btn btn-light"
+                    type="button"
+                    onclick="togglePassword()">
+
+                    <i class="fas fa-eye"></i>
+
+                </button>
+
+            </div>
+
+            <button class="btn btn-primary w-100 login-btn">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <div class="text-center mt-4">
+
+            Don't have an account?
+
+            <a href="{% url 'register' %}">
+
+                Register
+
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="card-body">
+<script>
 
-{% if error %}
-<div class="alert alert-danger">
-{{ error }}
-</div>
-{% endif %}
+function togglePassword(){
 
-<form method="POST">
+const input=document.getElementById("password");
 
-{% csrf_token %}
+input.type=input.type==="password"?"text":"password";
 
-<input type="text" name="username" class="form-control mb-3" placeholder="Username">
+}
 
-<input type="password" name="password" class="form-control mb-3" placeholder="Password">
-
-<button class="btn btn-success">Login</button>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+</script>
 
 {% endblock %}

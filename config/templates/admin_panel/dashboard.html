@@ -1,0 +1,235 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<!--<h1 class="mb-4">-->
+
+<!--Admin Dashboard-->
+
+<!--</h1>-->
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<div class="card-icon bg-primary">
+
+<i class="fas fa-users"></i>
+
+</div>
+
+<h2>{{ students }}</h2>
+
+<p>Total Students</p>
+
+<small class="text-success">
+
+<i class="fas fa-arrow-up"></i>
+
+Registered Users
+
+</small>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<div class="card-icon bg-success">
+
+<i class="fas fa-book"></i>
+
+</div>
+
+<h2>{{ courses }}</h2>
+
+<p>Total Courses</p>
+
+<small class="text-success">
+
+Available Courses
+
+</small>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<div class="card-icon bg-warning">
+
+<i class="fas fa-file-alt"></i>
+
+</div>
+
+<h2>{{ materials }}</h2>
+
+<p>Study Materials</p>
+
+<small>
+
+PDFs & Videos
+
+</small>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<div class="card-icon bg-danger">
+
+<i class="fas fa-question-circle"></i>
+
+</div>
+
+<h2>{{ quizzes }}</h2>
+
+<p>Total Quizzes</p>
+
+<small>
+
+Quiz Management
+
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="row mt-4">
+
+<div class="col-md-6">
+
+<div class="card-box">
+
+<h4>Certificates Issued</h4>
+
+<h1>{{ certificates }}</h1>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="card-box">
+
+<h4>System Status</h4>
+
+<p class="text-success">
+
+✅ AI LearnMate is Running Successfully
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card-box mt-4">
+
+<h3>System Analytics</h3>
+
+<canvas id="analyticsChart"></canvas>
+
+</div>
+
+
+<div class="card-box mt-4">
+
+<h3>Monthly Student Registrations</h3>
+
+<canvas id="studentChart"></canvas>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById("analyticsChart");
+
+new Chart(ctx,{
+
+type:"bar",
+
+data:{
+
+labels:{{ chart_labels|safe }},
+
+datasets:[{
+
+label:"AI LearnMate",
+
+data:{{ chart_values|safe }}
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+
+display:false
+
+}
+
+}
+
+}
+
+});
+
+</script>
+
+<script>
+
+const studentCtx = document.getElementById("studentChart");
+
+new Chart(studentCtx,{
+
+type:"line",
+
+data:{
+
+labels:{{ context_months|safe }},
+
+datasets:[{
+
+label:"Students",
+
+data:{{ context_student_counts|safe }},
+
+fill:false,
+
+borderWidth:3
+
+}]
+
+}
+
+});
+
+</script>
+{% endblock %}

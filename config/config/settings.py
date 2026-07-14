@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'progress_tracker',
     'api',
     'study_planner',
+    'admin_panel',
 
 ]
 
@@ -79,6 +80,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_processors.notification_context',
+                'admin_panel.context_processors.admin_notifications',
             ],
         },
     },

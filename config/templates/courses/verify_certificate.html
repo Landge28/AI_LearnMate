@@ -1,49 +1,132 @@
-{% extends "accounts/dashboard_base.html" %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="container mt-5">
+<head>
 
-    <div class="widget-card text-center">
+<meta charset="UTF-8">
 
-        <h1 class="text-success">
-            ✅ Certificate Verified
-        </h1>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <hr>
+<title>Certificate Verification</title>
 
-        <h3>
-            {{ certificate.student.get_full_name|default:certificate.student.username }}
-        </h3>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <p>
-            Successfully completed
-        </p>
+</head>
 
-        <h4>
-            {{ certificate.course.title }}
-        </h4>
+<body class="bg-light">
 
-        <br>
+<div class="container py-5">
 
-        <p>
+<div class="row justify-content-center">
 
-            <strong>Certificate ID:</strong>
+<div class="col-lg-8">
 
-            {{ certificate.certificate_id }}
+<div class="card shadow-lg border-0">
 
-        </p>
+<div class="card-body p-5 text-center">
 
-        <p>
+<img src="/media/certificate/logo.png"
+     width="90"
+     class="mb-3">
 
-            <strong>Issued On:</strong>
+<h1 class="text-success fw-bold">
 
-            {{ certificate.issued_at|date:"d F Y" }}
+✅ Certificate Verified
 
-        </p>
+</h1>
 
-    </div>
+<p class="text-muted">
+
+This certificate has been successfully verified.
+
+</p>
+
+<hr>
+
+<h2 class="fw-bold">
+
+{{ certificate.student.get_full_name|default:certificate.student.username }}
+
+</h2>
+
+<h4 class="text-primary mt-3">
+
+{{ certificate.course.title }}
+
+</h4>
+
+<div class="mt-4">
+
+<table class="table table-bordered">
+
+<tr>
+
+<th width="35%">Certificate ID</th>
+
+<td>{{ certificate.certificate_id }}</td>
+
+</tr>
+
+<tr>
+
+<th>Issued On</th>
+
+<td>{{ certificate.issued_at|date:"d F Y" }}</td>
+
+</tr>
+
+<tr>
+
+<th>Status</th>
+
+<td>
+
+<span class="badge bg-success">
+
+Verified
+
+</span>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+    
+<div class="mt-4">
+
+<a
+href="{% url 'view_certificate_pdf' certificate.certificate_id %}"
+class="btn btn-primary">
+
+📄 View Original Certificate
+
+</a>
+
+</div>
+<div class="mt-4">
+
+<h5 class="text-success">
+
+✔ Verified by AI LearnMate
+
+</h5>
 
 </div>
 
-{% endblock %}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

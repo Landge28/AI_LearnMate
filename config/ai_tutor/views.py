@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 
+
 @login_required
 def ai_tutor_page(request):
 
@@ -12,3 +13,4 @@ def ai_tutor_page(request):
         request,
         "ai_tutor/ai_tutor.html"
     )
+

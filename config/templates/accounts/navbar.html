@@ -41,13 +41,80 @@ Welcome Back,
 
         </div>
 
-        <div class="notification">
+        <div class="notification dropdown">
 
-            <i class="fas fa-bell"></i>
+    <i
+        class="fas fa-bell"
+        id="notificationDropdown"
+        data-bs-toggle="dropdown"
+        style="cursor:pointer;"
+    ></i>
 
-            <span class="notification-dot"></span>
+    {% if notifications %}
+        <span class="notification-dot"></span>
+    {% endif %}
+
+    <ul class="dropdown-menu dropdown-menu-end notification-menu shadow">
+
+    <li class="dropdown-header">
+
+        <strong>Notifications</strong>
+
+    </li>
+
+    {% for n in notifications %}
+
+    <li>
+
+        <div class="dropdown-item">
+
+            <div class="fw-bold">
+
+                {{ n.title }}
+
+            </div>
+
+            <small class="text-muted">
+
+                {{ n.message|truncatechars:70 }}
+
+            </small>
+
+            <br>
+
+            <small class="text-secondary">
+
+                {{ n.created_at|date:"d M Y H:i" }}
+
+            </small>
 
         </div>
+
+    </li>
+
+    {% if not forloop.last %}
+
+    <li><hr class="dropdown-divider"></li>
+
+    {% endif %}
+
+    {% empty %}
+
+    <li>
+
+        <div class="dropdown-item text-center">
+
+            No Notifications
+
+        </div>
+
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+</div>
 
        <div class="profile">
 

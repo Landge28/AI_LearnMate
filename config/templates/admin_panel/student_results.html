@@ -1,0 +1,178 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Student Results
+
+</h2>
+<form method="GET" class="row mb-4">
+
+<div class="col-md-4">
+
+<input
+type="text"
+name="search"
+class="form-control"
+placeholder="Search Student"
+value="{{ request.GET.search }}">
+
+</div>
+
+<div class="col-md-3">
+
+<select
+name="course"
+class="form-select">
+
+<option value="">All Courses</option>
+
+{% for course in courses %}
+
+<option value="{{ course.id }}">
+
+{{ course.title }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<select
+name="quiz"
+class="form-select">
+
+<option value="">All Quizzes</option>
+
+{% for quiz in quizzes %}
+
+<option value="{{ quiz.id }}">
+
+{{ quiz.title }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<button class="btn btn-primary w-100">
+
+Search
+
+</button>
+
+</div>
+
+</form>
+
+<div class="row mb-4">
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<h2>
+
+{{ results.count }}
+
+</h2>
+
+<p>
+
+Attempts
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+<div class="card-box">
+
+<table class="table table-hover table-bordered">
+
+<thead>
+
+<tr>
+
+<th>#</th>
+
+<th>Student</th>
+
+<th>Course</th>
+
+<th>Quiz</th>
+
+<th>Score</th>
+
+<th>Attempted</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for result in results %}
+
+<tr>
+
+<td>{{ forloop.counter }}</td>
+
+<td>{{ result.student.username }}</td>
+
+<td>{{ result.quiz.course.title }}</td>
+
+<td>{{ result.quiz.title }}</td>
+
+<td>
+
+<strong>
+
+{{ result.score }}
+
+</strong>
+
+</td>
+
+<td>
+
+{{ result.attempted_at|date:"d M Y H:i" }}
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="6" class="text-center">
+
+No Results Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

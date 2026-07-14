@@ -1,0 +1,185 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Student Progress
+
+</h2>
+<form method="GET" class="mb-4">
+
+<div class="row">
+
+<div class="col-md-4">
+
+<input
+
+type="text"
+
+name="search"
+
+class="form-control"
+
+placeholder="Search Student"
+
+value="{{ request.GET.search }}">
+
+</div>
+
+<div class="col-md-2">
+
+<button class="btn btn-primary">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+<div class="card-box">
+
+<table class="table table-bordered table-hover">
+
+<thead>
+
+<tr>
+
+<th>Rank</th>
+
+<th>Student</th>
+
+<th>Quizzes</th>
+
+<th>Average</th>
+
+<th>Highest</th>
+
+<th>Progress</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for p in progress %}
+
+<tr>
+
+<td>
+
+{% if forloop.counter == 1 %}
+
+🥇
+
+{% elif forloop.counter == 2 %}
+
+🥈
+
+{% elif forloop.counter == 3 %}
+
+🥉
+
+{% else %}
+
+{{ forloop.counter }}
+
+{% endif %}
+
+</td>
+
+<td>
+
+{{ p.student.username }}
+
+</td>
+
+<td>
+
+{{ p.quizzes_attempted }}
+
+</td>
+
+<td>
+
+{% if p.average_score >= 80 %}
+
+<span class="badge bg-success">
+
+{{ p.average_score|floatformat:1 }}
+
+</span>
+
+{% elif p.average_score >= 60 %}
+
+<span class="badge bg-warning">
+
+{{ p.average_score|floatformat:1 }}
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+
+{{ p.average_score|floatformat:1 }}
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{{ p.highest_score }}
+
+</td>
+
+<td style="width:260px;">
+
+<div class="progress">
+
+<div
+
+class="progress-bar bg-success"
+
+role="progressbar"
+
+style="width:{{ p.progress_percentage }}%;">
+
+{{ p.progress_percentage|floatformat:0 }}%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="6">
+
+No Progress Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

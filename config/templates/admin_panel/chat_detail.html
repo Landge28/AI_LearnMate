@@ -1,0 +1,77 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+AI Conversation
+</h2>
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <h5>
+            Student :
+            {{ session.student.username }}
+        </h5>
+
+        <p>
+            Started :
+            {{ session.created_at|date:"d M Y H:i" }}
+        </p>
+
+    </div>
+
+</div>
+
+{% for msg in messages %}
+
+<div class="card mb-3">
+
+    <div class="card-body">
+
+        {% if msg.role == "user" %}
+
+        <h5 class="text-primary">
+
+            👤 Student
+
+        </h5>
+
+        {% else %}
+
+        <h5 class="text-success">
+
+            🤖 AI Tutor
+
+        </h5>
+
+        {% endif %}
+
+        <p style="white-space: pre-wrap;">
+
+            {{ msg.message }}
+
+        </p>
+
+        <small class="text-muted">
+
+            {{ msg.created_at|date:"d M Y H:i:s" }}
+
+        </small>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="alert alert-warning">
+
+No conversation found.
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

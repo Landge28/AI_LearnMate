@@ -1,0 +1,39 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2>Edit Student</h2>
+
+<div class="card-box">
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<h4>User Information</h4>
+
+{{ user_form.as_p }}
+
+<hr>
+
+<h4>Profile Information</h4>
+
+{{ profile_form.as_p }}
+
+<button class="btn btn-success">
+
+Save Changes
+
+</button>
+
+<a href="{% url 'student_detail' student.id %}" class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+{% endblock %}

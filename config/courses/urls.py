@@ -17,4 +17,6 @@ urlpatterns = [
 
     path("verify/<str:certificate_id>/",views.verify_certificate,name="verify_certificate",),
 
+    path("certificate/view/<str:certificate_id>/",views.view_certificate_pdf,name="view_certificate_pdf",),
+
 ]

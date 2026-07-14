@@ -1,59 +1,79 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div class="row justify-content-center mt-5">
+<div class="auth-container">
 
-<div class="col-md-5">
+    <div class="auth-card">
 
-<div class="card shadow">
+        <div class="auth-header">
 
-<div class="card-header">
+            <i class="fas fa-user-plus auth-logo"></i>
 
-<h3>Register</h3>
+            <h2>Create Account</h2>
 
-</div>
+            <p>Join AI LearnMate 🚀</p>
 
-<div class="card-body">
+        </div>
 
-<form method="POST">
-    {% csrf_token %}
+        <form method="POST">
 
-    <div class="mb-3">
-        <label class="form-label">Full Name</label>
-        {{ form.first_name }}
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+                {{ form.first_name }}
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">
+                    <i class="fas fa-at"></i>
+                </span>
+                {{ form.username }}
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                {{ form.email }}
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+                {{ form.password }}
+            </div>
+
+            <div class="input-group mb-4">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+                {{ form.confirm_password }}
+            </div>
+
+            <button class="btn btn-primary w-100 login-btn">
+                Register
+            </button>
+
+        </form>
+
+        <div class="text-center mt-4">
+            Already have an account?
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+        </div>
+
     </div>
-
-    <div class="mb-3">
-        <label class="form-label">Username</label>
-        {{ form.username }}
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Email</label>
-        {{ form.email }}
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Password</label>
-        {{ form.password }}
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Confirm Password</label>
-        {{ form.confirm_password }}
-    </div>
-
-    <button type="submit" class="btn btn-primary w-100">
-        Register
-    </button>
-</form>
-
-</div>
-
-</div>
-
-</div>
 
 </div>
 

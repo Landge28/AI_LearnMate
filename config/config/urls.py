@@ -58,6 +58,8 @@ urlpatterns = [
 
     path("ai-tutor/",include("ai_tutor.urls")),
     path("recommendations/",include("recommendations.urls")),
+
+    path("admin-panel/",include("admin_panel.urls")),
 ]
 
 
@@ -73,3 +75,4 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
+

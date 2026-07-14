@@ -1,0 +1,33 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2>Add Study Material</h2>
+
+<div class="card-box">
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button class="btn btn-success">
+
+Save
+
+</button>
+
+<a
+href="{% url 'admin_materials' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+{% endblock %}

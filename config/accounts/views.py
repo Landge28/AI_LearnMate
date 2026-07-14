@@ -26,6 +26,8 @@ from .forms import StudentProfileForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
+from .models import Notification
+
 
 # ==========================================
 # ACCOUNTS APP - USER AUTHENTICATION VIEWS
@@ -97,12 +99,21 @@ def login_view(request):
 
             login(request, user)
 
-            response = redirect('dashboard')
+            if user.is_staff:
 
-            response.set_cookie('username',username,max_age=86400)
+                response = redirect("admin_dashboard")
+
+            else:
+
+                response = redirect("dashboard")
+
+            response.set_cookie(
+                "username",
+                username,
+                max_age=86400
+            )
 
             return response
-
         return render(request,'accounts/login.html',{'error': 'Invalid Credentials'})
 
     return render(request,'accounts/login.html')
@@ -173,6 +184,8 @@ def dashboard_view(request):
 
     recent_courses = Course.objects.order_by("-created_at")[:5]
 
+    # notifications = Notification.objects.filter(is_active=True).order_by("-created_at")[:5]
+
     context = {
 
         "total_courses": total_courses,
@@ -182,6 +195,7 @@ def dashboard_view(request):
         "progress": progress,
         "latest_course": latest_course,
         "recent_courses": recent_courses,
+        # "notifications": notifications,
 
     }
 
@@ -200,7 +214,7 @@ def logout_view(request):
 
     logout(request)
 
-    response = redirect('login')
+    response = redirect('home')
 
     response.delete_cookie('username')
 
@@ -332,3 +346,4 @@ def change_password_done(request):
         request,
         "accounts/change_password_done.html"
     )
+

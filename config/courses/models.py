@@ -72,6 +72,8 @@ class Certificate(models.Model):
 
     issued_at = models.DateTimeField(auto_now_add=True)
 
+    certificate_file = models.FileField(upload_to="certificates/",blank=True,null=True)
+
     class Meta:
         unique_together = ("student", "course")
 

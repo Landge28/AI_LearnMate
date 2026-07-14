@@ -1,0 +1,133 @@
+{% extends "admin_panel/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+AI Tutor Chat Sessions
+
+</h2>
+<form method="GET" class="mb-4">
+
+<div class="row">
+
+<div class="col-md-4">
+
+<input
+type="text"
+name="search"
+class="form-control"
+placeholder="Search Student..."
+value="{{ request.GET.search }}">
+
+</div>
+
+<div class="col-md-2">
+
+<button class="btn btn-primary">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+<div class="card-box">
+
+<table class="table table-bordered table-hover">
+
+<thead>
+
+<tr>
+
+<th>Student</th>
+
+<th>Chat Title</th>
+
+<th>Total Messages</th>
+
+<th>Created</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for session in sessions %}
+
+<tr>
+
+<td>
+
+{{ session.student.username }}
+
+</td>
+
+<td>
+
+{{ session.title }}
+
+</td>
+
+<td>
+
+{{ session.messages.count }}
+
+</td>
+
+<td>
+
+{{ session.created_at|date:"d M Y H:i" }}
+
+</td>
+
+<td>
+
+<a
+href="{% url 'admin_chat_detail' session.id %}"
+class="btn btn-primary btn-sm">
+
+View
+
+</a>
+
+<a
+href="{% url 'admin_delete_chat' session.id %}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this chat session?')">
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="5">
+
+No AI Chats Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

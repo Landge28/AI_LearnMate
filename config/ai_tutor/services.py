@@ -49,8 +49,8 @@ from django.conf import settings
 #
 #         return f"AI Error: {error}"
 
-import google.generativeai as genai
-from django.conf import settings
+# import google.generativeai as genai
+# from django.conf import settings
 
 
 # ============================================
